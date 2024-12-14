@@ -95,6 +95,8 @@ function HomePage() {
             <CateoryCard url={groceries} title={"Groceries"} category={"groceries"}/>
             <CateoryCard url={beauty} title={"Cosmetics"} category={"beauty"}/>
             <CateoryCard url={fragrances} title={"Perfumes"} category={"fragrances"}/>
+            <CateoryCard url={fragrances} title={"Perfumes"} category={"fragrances"}/>
+            <CateoryCard url={fragrances} title={"Perfumes"} category={"fragrances"}/>
           </div>
         </div>
       </div>
