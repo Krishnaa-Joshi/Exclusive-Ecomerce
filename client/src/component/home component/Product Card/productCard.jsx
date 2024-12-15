@@ -18,12 +18,6 @@ import increment from "../../../assets/Home assets/Product Card/increment.svg";
 import trash from "../../../assets/wishlist assets/delete.svg";
 
 const ProductCard = ({ product, url }) => {
-  // Calculate discounted price
-  const discountedPrice = (
-    product.price -
-    (product.price * product.discountPercentage) / 100
-  ).toFixed(2);
-
   const {
     wishlistProducts,
     setWhishlistProducts,
@@ -31,12 +25,19 @@ const ProductCard = ({ product, url }) => {
     setCartProducts,
     handleIncrement,
     handleDecrement,
-    isAuth
+    isAuth,
+    currentPage
   } = useContext(Context);
 
-  const { currentPage } = useContext(Context);
   const Navigate = useNavigate();
 
+  // Calculate discounted price
+  const discountedPrice = (
+    product.price -
+    (product.price * product.discountPercentage) / 100
+  ).toFixed(2);
+
+  //  Add product to Wishlist
   const handleAddToWishlist = (product) => {
     if(!isAuth){
       Navigate("/signUp");
@@ -53,11 +54,13 @@ const ProductCard = ({ product, url }) => {
     });
   };
 
+  // handle seen button
   const handleSeen = () => {
     Navigate(`/product/${product.id}`);
     window.location.reload();
   };
 
+  // Add product to Cart
   const handleAddToCart = (product) => {
     if(!isAuth){
       Navigate("/signUp");
@@ -93,8 +96,10 @@ const ProductCard = ({ product, url }) => {
           alt={product.title}
           className="max-h-full max-w-full object-contain"
         />
+
         {/* Action Icons */}
         <div className="absolute top-2 right-2 space-y-2">
+          {/* wishlist and delete button */}
           {currentPage != "" ? (
             <button
               className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md"
@@ -126,6 +131,7 @@ const ProductCard = ({ product, url }) => {
               />
             </button>
           )}
+          {/* Seen button */}
           <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
             <img
               src={seen}
@@ -135,6 +141,7 @@ const ProductCard = ({ product, url }) => {
           </button>
         </div>
       </div>
+
       {/* Add to Cart Button */}
       {cartProducts.some((item) => item.id === product.id) ? (
         <div className="flex justify-around w-full items-center rounded-b-lg bg-black py-2 text-white">
@@ -170,6 +177,7 @@ const ProductCard = ({ product, url }) => {
 
       {/* Product Details */}
       <div className="p-2  flex-1 flex flex-col justify-start">
+        
         {/* Title */}
         <h3 className="text-sm font-bold mb-1 line-clamp-2">{product.title}</h3>
 

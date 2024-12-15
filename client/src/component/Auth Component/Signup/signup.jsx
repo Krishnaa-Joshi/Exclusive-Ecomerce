@@ -69,6 +69,7 @@ function Signup() {
       localStorage.setItem("token", response.data.token); //save token to local storage
       console.log(response.data.token);
       navigate("/");
+      window.location.reload();
     } catch (err) {
       // handle Error
       if (err.response) {

@@ -10,7 +10,10 @@ import { Context } from "@/context";
 
 // Component
 import DisplayCart from "@/component/cart component/cart items/displayCartItem";
-import EmptyCart from "@/component/cart component/Empty Cart/emptyCart";
+import EmptyState from "@/component/Account/Empty State/emptyState";
+
+// SVGs
+import emptyCart from "../../assets/cart assets/emptyCart.svg";
 
 function CartPage() {
   const { cartProducts } = useContext(Context);
@@ -24,7 +27,7 @@ function CartPage() {
       {
         cartProducts.length > 0 ? 
         <DisplayCart/> :
-        <EmptyCart/>
+        <EmptyState img={emptyCart} heading={"Your cart is Empty"} subLine={"Looks like you haven't made your choice yet..."} />
       }
       
       <Footer />

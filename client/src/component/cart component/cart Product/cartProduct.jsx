@@ -5,10 +5,12 @@ import remove from "../../../assets/cart assets/remove.svg";
 import { useContext } from "react";
 import { Context } from "@/context";
 
-function CardProduct({ product }) {
+// PropTypes
+import PropTypes from "prop-types";
+
+function CartProduct({ product }) {
   const {
     editCart,
-    setEditCart,
     cartProducts,
     setCartProducts,
     handleIncrement,
@@ -23,6 +25,7 @@ function CardProduct({ product }) {
 
   return (
     <div className="grid grid-cols-4 items-center justify-items-center my-12">
+      {/* Product Img and Name */}
       <div className="flex items-center w-[15vw] justify-between">
         <div className="relative" onClick={handleRemove}>
           <img src={product.images[0]} alt="Product" className="h-20 w-36" />
@@ -38,10 +41,14 @@ function CardProduct({ product }) {
         </div>
         <p className="text-start w-[20vw]">{product.title}</p>
       </div>
+
+      {/* Price */}
       <div>
         <p>{`$ ${product.price}`}</p>
       </div>
-      <div className="">
+      
+      {/* Quantity Setter */}
+      <div>
         <div className="border-2 border-[#999999] p-1 rounded-lg w-20 flex items-center justify-evenly">
           <p className="text-xl">
             {cartProducts.find((item) => item.id === product.id)?.quantity}
@@ -70,6 +77,7 @@ function CardProduct({ product }) {
           </div>
         </div>
       </div>
+
       <div>
         <p>{`$ ${product.price}`}</p>
       </div>
@@ -77,4 +85,8 @@ function CardProduct({ product }) {
   );
 }
 
-export default CardProduct;
+export default CartProduct;
+
+CartProduct.propTypes = {
+  product: PropTypes.object
+}

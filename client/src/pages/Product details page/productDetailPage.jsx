@@ -18,6 +18,7 @@ function ProductDetailsPage() {
   const [product, setProduct] = useState(null);
   const {products} = useContext(Context);
 
+  // Fetch Product from id
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -33,6 +34,7 @@ function ProductDetailsPage() {
     fetchProduct();
   }, [id]);
 
+  // Loading State
   if (!product) return <div className="h-screen flex justify-center items-center">
       <p className="text-6xl font-semibold">Loading...</p>
     </div>
@@ -43,12 +45,16 @@ function ProductDetailsPage() {
       <HeroSection />
       <NavBar />
       <div className="flex justify-between items-center mt-20 h-[130vh]">
+        {/* Product Images */}
         <ProductImages product={product}/>
+        {/* Product Details */}
         <ProductDetails product={product}/>
       </div>
 
+      {/* Related Items */}
       <div className="ml-2 h-[80vh]">
         <SectionHeading heading={"Related Item"} />
+        {/* Products */}
         <div className="grid grid-cols-5  w-[97vw] my-12 ml-5">
           {products
             .sort(() => Math.random() - 0.5)

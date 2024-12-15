@@ -1,3 +1,5 @@
+// PropTypes
+import PropTypes from "prop-types";
 
 // handle section heading in home Page 
 function SectionHeading({heading}) {
@@ -10,3 +12,8 @@ function SectionHeading({heading}) {
 }
 
 export default SectionHeading;
+
+// Props Validation
+SectionHeading.propTypes = {
+  heading: PropTypes.string,
+}

@@ -6,8 +6,6 @@ import { Context } from "@/context";
 import PropTypes from "prop-types";
 
 function SummaryProductCard({ product }) {
-  console.log(product);
-
   const { cartProducts } = useContext(Context);
 
   return (

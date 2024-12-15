@@ -25,7 +25,9 @@ const CountdownTimer = ({ targetDate }) => {
   // State to hold time left
   const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft());
 
-  // Effect to update the countdown timer
+
+
+  // update the countdown timer
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
@@ -36,9 +38,12 @@ const CountdownTimer = ({ targetDate }) => {
 
   return (
     <div className="flex justify-between items-end w-2/5 mx-7">
+      {/* Heading */}
       <div>
         <h1 className="text-4xl font-bold">Flash Sales</h1>
       </div>
+
+      {/* Timer */}
       <div className="flex items-center space-x-4 text-center">
         {Object.entries(timeLeft).map(([unit, value], index, arr) => (
           <React.Fragment key={unit}>

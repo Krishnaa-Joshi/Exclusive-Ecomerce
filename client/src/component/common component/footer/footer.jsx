@@ -63,7 +63,7 @@ function Footer() {
           <h2 className="font-bold text-xl mb-4 ">Quick Links</h2>
           <p className="mb-2 cursor-pointer">Privacy Policy</p>
           <p className="mb-2 cursor-pointer">Terms of Use</p>
-          <p className="mb-2 cursor-pointer">FAQ</p>
+          <p className="mb-2 cursor-pointer" onClick={()=>navigate("/FAQs")}>FAQ</p>
           <p className="mb-2 cursor-pointer" onClick={()=>navigate("/contact")}>Contact</p>
         </div>
 
@@ -74,12 +74,14 @@ function Footer() {
             Save ₹250 with App New User only
           </p>
           <div className="flex mb-4 cursor-pointer">
+            {/* QR Code */}
             <img 
               className="h-16"
               src={QRCode}
               alt="QR Code"
-            /> {/* QR Code */}
-            <div className="flex flex-col"> {/* paly store and app Store Link */}
+            /> 
+            {/* paly store and app Store Link */}
+            <div className="flex flex-col"> 
               <img
                 className="h-7 mb-1.5 cursor-pointer"
                 src={PlayStore}
@@ -91,8 +93,10 @@ function Footer() {
                 alt="App Store"
               />
             </div>
-          </div>          
-          <div className="flex w-40 justify-between"> {/* Social Media Links */}  
+          </div>  
+
+          {/* Social Media Links */}          
+          <div className="flex w-40 justify-between"> 
             <img src={Facebook} alt="Facebook" className="cursor-pointer"/>
             <img src={Twitter} alt="X" className="cursor-pointer"/>
             <img src={Instagram} alt="Instagram" className="cursor-pointer"/>
@@ -100,6 +104,8 @@ function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Copyrights */}
       <div className="bg-black w-full border-t-[#141414] border-t-2 flex justify-center items-center h-14">
         <p className="text-[#3D3D3D] ">
           &copy; Copyright Rimel 2022. All right reserved
