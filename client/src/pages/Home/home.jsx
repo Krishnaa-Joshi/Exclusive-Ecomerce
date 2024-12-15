@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import CountdownTimer from "@/component/home component/Timer/countDown";
 import ProductCard from "@/component/home component/Product Card/productCard.jsx";
 import CateoryCard from "@/component/home component/Category card/card";
-import AboutCard from "@/component/about Component/About-card";
+import AboutCard from "@/component/about Component/About card";
 
 // SVGs and img
 import furniture from "../../assets/Home assets/Category Card/furniture.svg";
@@ -53,23 +53,26 @@ function HomePage() {
     }
   }, [location.search]);
 
-  const handleViewAllProducts = ()=>{
+  // Handle View All products
+  const handleViewAllProducts = () => {
     setCategoryProducts(products);
     navigate("/category");
-  }
+  };
 
   return (
     <>
       <HeroSection />
       <NavBar />
-
+      {/* Banner */}
       <div className="flex justify-center m-8">
         <img src={Banner} alt="" className="w-full h-[73vh]" />
       </div>
 
+      {/* Sale Products */}
       <div className="h-1/4 mx-4 my-4 py-10 border-b-2 w-[97vw]">
         <SectionHeading heading={"Today's"} />
-        <CountdownTimer targetDate="2024-12-15T23:59:59" />
+        <CountdownTimer targetDate="2024-12-30T23:59:59" />
+        {/* Products */}
         <div className="grid grid-cols-5  w-[97vw] my-5 ml-5">
           {shuffledProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
@@ -77,64 +80,103 @@ function HomePage() {
         </div>
 
         <div className="w-full flex justify-center my-5 ">
-          <button className="bg-[#DB4444] p-2.5 text-white w-48 rounded-sm" onClick={handleViewAllProducts}>
+          <button
+            className="bg-[#DB4444] p-2.5 text-white w-48 rounded-sm"
+            onClick={handleViewAllProducts}
+          >
             View All Products
           </button>
         </div>
       </div>
 
+      {/* Categorys Section*/}
       <div className="h-96 border-b-2 w-[97vw] my-5 ml-4 py-10">
         <SectionHeading heading={"Categories"} />
+        {/* headings */}
         <div className="mx-7 my-3">
           <p className="text-3xl font-semibold">Browse By Cateory</p>
         </div>
 
+        {/* Category */}
         <div className="flex justify-center items-center h-[30vh]">
           <div className="flex justify-evenly w-[80vw] ">
-            <CateoryCard url={furniture} title={"Furnitures"} category={"furniture"} />
-            <CateoryCard url={groceries} title={"Groceries"} category={"groceries"}/>
-            <CateoryCard url={beauty} title={"Cosmetics"} category={"beauty"}/>
-            <CateoryCard url={fragrances} title={"Perfumes"} category={"fragrances"}/>
-            <CateoryCard url={fragrances} title={"Perfumes"} category={"fragrances"}/>
-            <CateoryCard url={fragrances} title={"Perfumes"} category={"fragrances"}/>
+            <CateoryCard
+              url={furniture}
+              title={"Furnitures"}
+              category={"furniture"}
+            />
+            <CateoryCard
+              url={groceries}
+              title={"Groceries"}
+              category={"groceries"}
+            />
+            <CateoryCard url={beauty} title={"Cosmetics"} category={"beauty"} />
+            <CateoryCard
+              url={fragrances}
+              title={"Perfumes"}
+              category={"fragrances"}
+            />
           </div>
         </div>
       </div>
-
+      
+      {/* Products Section*/}
       <div className="h-2/3  py-10 w-[97vw] my-5 ml-4 ">
         <SectionHeading heading={"Our Products"} />
+        {/* Heading */}
         <div className="mx-7 my-3">
           <p className="text-3xl font-semibold">Explore Our Products</p>
         </div>
+        {/* Products */}
         <div className="grid grid-cols-5  w-[97vw] my-10 ml-5">
           {products.slice(0, 10).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
+          {/* {Children.toArray(
+            products.map((item) => (
+              <>
+                <ProductCard product={item} />
+              </>
+            ))
+          )} */}
         </div>
         <div className="w-full flex justify-center my-5">
-          <button className="bg-[#DB4444] p-2.5 text-white w-48 rounded-sm" onClick={handleViewAllProducts}>
+          <button
+            className="bg-[#DB4444] p-2.5 text-white w-48 rounded-sm"
+            onClick={handleViewAllProducts}
+          >
             View All Products
           </button>
         </div>
       </div>
 
+      {/* Coming Soon Products */}
       <div className="ml-4">
-          <SectionHeading heading={"Features"}/>
-          <p className="ml-7 my-4 text-4xl font-semibold">COMING SOON</p>
+        <SectionHeading heading={"Features"} />
+        <p className="ml-7 my-4 text-4xl font-semibold">COMING SOON</p>
 
-          <div className="flex mx-8 my-11">
-            <img src={PlayStations} alt="Play Stations" className="h-[103vh]"/>
+        <div className="flex mx-8 my-11">
+          <img src={PlayStations} alt="Play Stations" className="h-[103vh]" />
 
-            <div className="flex flex-col ml-20 ">
-              <img src={WomenCollection} alt="women Collections" className="mb-8 w-[45vw]"/>
-              <div className="flex jutify-center mt-2">
-                <img src={Speakers} alt="speakers"  className="mr-10 w-[21vw]"/>
-                <img src={GucciPerfume} alt="Gucci Perfumes" className="w-[21vw]" />
-              </div>
+          <div className="flex flex-col ml-20 ">
+            <img
+              src={WomenCollection}
+              alt="women Collections"
+              className="mb-8 w-[45vw]"
+            />
+            <div className="flex jutify-center mt-2">
+              <img src={Speakers} alt="speakers" className="mr-10 w-[21vw]" />
+              <img
+                src={GucciPerfume}
+                alt="Gucci Perfumes"
+                className="w-[21vw]"
+              />
             </div>
           </div>
+        </div>
       </div>
 
+      {/* Services */}
       <div className="flex justify-center items-center h-[50vh]">
         <AboutCard
           figure="FREE AND FAST DELIVERY"

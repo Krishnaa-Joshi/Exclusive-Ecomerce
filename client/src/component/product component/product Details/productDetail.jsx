@@ -17,6 +17,9 @@ import { Context } from "@/context";
 // PropTypes
 import PropTypes from "prop-types";
 
+// Component
+import DeliveryService from "../Delivery Service/service";
+
 function ProductDetails({ product }) {
   const navigate = useNavigate();
   const {
@@ -29,6 +32,7 @@ function ProductDetails({ product }) {
     isAuth
   } = useContext(Context);
 
+  // Add product to cart
   const handleAddToCart = (product) => {
     if(!isAuth){
       navigate("/signUp");
@@ -50,6 +54,7 @@ function ProductDetails({ product }) {
     });
   };
 
+  // handle Buy Product
   const handleBuyNow = () => {
     if(!isAuth){
       navigate("/signUp");
@@ -58,6 +63,7 @@ function ProductDetails({ product }) {
     navigate("/checkout");
   };
 
+  // add product to wishlist
   const handleAddToWishlist = (product) => {
     if(!isAuth){
       navigate("/signUp");
@@ -76,7 +82,9 @@ function ProductDetails({ product }) {
 
   return (
     <div className="h-screen mr-16">
+      {/* title */}
       <h1 className="text-2xl font-semibold my-2">{product.title}</h1>
+      {/* Rating */}
       <div className="flex items-center my-2">
         <div className=" flex">
           {(() => {
@@ -94,15 +102,19 @@ function ProductDetails({ product }) {
         <span className="text-gray-500 text-sm ml-2">
           {`( ${product.rating.toFixed(1)} Reviews )`}
         </span>
+        {/* In Stock or Not */}
         <p className="mx-2.5"> | </p>
         <p className={product.stock !== 0 ? "text-green-500" : "text-red-500"}>
           {product.stock !== 0 ? "In Stock" : "Out of Stock"}
         </p>
       </div>
+      {/* Price */}
       <div className="text-2xl font-medium mb-5">{`$${product.price}`}</div>
+      {/* Description */}
       <div className="w-[25vw] pb-5 border-b-2 border-b-[#999999]">
         {product.description}
       </div>
+      {/* Add to Cart Button */}
       <div className="flex my-4 items-center">
         {cartProducts.some((item) => item.id === product.id) ? (
           <div className="flex my-3">
@@ -136,6 +148,7 @@ function ProductDetails({ product }) {
             Add To Cart
           </button>
         )}
+        {/* Buy Now Button */}
         <div>
           <button
             className="bg-[#DB4444] p-2.5 text-white rounded-sm w-40 m-3 cursor-pointer"
@@ -144,6 +157,7 @@ function ProductDetails({ product }) {
             Buy Now
           </button>
         </div>
+        {/* Wishlist */}
         <div
           className="my-3 border-2 border-[#999999] p-2 rounded-md cursor-pointer"
           onClick={() => handleAddToWishlist(product)}
@@ -151,33 +165,19 @@ function ProductDetails({ product }) {
           <img
             src={
               wishlistProducts.some((item) => item.id === product.id)
-                ? AddedTowishlist // Image for added product
-                : wishlist // Image for product not in wishlist
+                ? AddedTowishlist 
+                : wishlist 
             }
             alt="wishlist icon"
           />
         </div>
       </div>
 
+      {/* Free Delivery and Return Policy */}
       <div className="border-2 border-[#999999] rounded-md w-96 my-7">
-        <div className="flex p-4 border-b-2 border-b-[#999999] ">
-          <img src={Delivery} alt="" />
-          <div className="mx-4">
-            <p className="font-semibold text-lg">Free Delivery</p>
-            <p className="text-xs font-medium border-b-[1px] border-b-black">
-              Enter your postal code for Delivery Availability
-            </p>
-          </div>
-        </div>
-        <div className="flex p-4">
-          <img src={returnDelivery} alt="" />
-          <div className="mx-4">
-            <p className="font-semibold text-lg">Return Delivery</p>
-            <p className="text-xs font-medium border-b-[1px] border-b-black">
-              Free 30 Days Delivery Returns. Details
-            </p>
-          </div>
-        </div>
+        <DeliveryService img={Delivery} heading={"Free Delivery"} description={"Enter your postal code for Delivery Availability"}/>
+        <div className="border-b-2 border-b-[#999999]"></div>
+        <DeliveryService img={returnDelivery} heading={"Return Delivery"} description={"Free 30 Days Delivery Returns. Details"}/>
       </div>
     </div>
   );

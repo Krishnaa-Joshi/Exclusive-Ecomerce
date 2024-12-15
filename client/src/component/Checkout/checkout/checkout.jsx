@@ -12,34 +12,46 @@ import NotSelceted from "../../../assets/Checkout assets/radio.svg";
 import Selected from "../../../assets/Checkout assets/radioCheck.svg";
 import CardDetails from "../Card Details/CardDetails";
 import { useNavigate } from "react-router-dom";
+import SummeryCard from "@/component/Summery Card/summeryCard";
+import Message from "@/component/Message/message";
+import Coupon from "@/component/Coupon/coupon";
 
 function Checkout() {
-  const { cartProducts } = useContext(Context);
+  const { cartProducts,error,setError,setErrorType,profileData,setSection } = useContext(Context);
   const [check, setCheck] = useState("COD");
   const navigate = useNavigate();
-  const [couponValid, setCouponValid] = useState(true);
 
-  const totalPrice = cartProducts.reduce(
-    (sum, product) => sum + product.price * product.quantity,
-    0
-  );
-
+  // Switch payment Mode
   const payementMode = (Mode) => {
     setCheck(Mode);
   };
 
-  const handleApplyCoupon = () => {
-    const isCouponValid = false;
-    setCouponValid(isCouponValid);
+  // check if Address object of ProfileData is empty or Not
+  function isAddressEmpty() {
+    return Object.values(profileData.address).every(
+      (value) => !value || value.trim() === ""
+    );
+  }
 
-    // Reset coupon validity back to true after 5 seconds
-    setTimeout(() => {
-      setCouponValid(true);
-    }, 5000); // 5000ms = 5 seconds
-  };
+  const handlePlaceOrder = ()=>{
+    if(isAddressEmpty()){
+      setErrorType(false);
+      setError("Address is Missing");
+      setSection("Address");
+      navigate("/account")
+    }
+    else
+      navigate("/orderPlaced")
+  }
 
   return (
     <div className="w-96">
+      {/* Error */}
+      {error ? (
+        <Message/>
+      ) : null}
+
+      {/* Products */}
       <div
         className={`overflow-y-auto ${
           cartProducts.length > 2 ? "max-h-48" : ""
@@ -51,21 +63,10 @@ function Checkout() {
         ))}
       </div>
 
-      <div>
-        <div className="flex font-medium justify-between p-2.5 my-2.5 border-b-2 border-b-[#999999]">
-          <p>Subtotal: </p>
-          <p>{`$${totalPrice.toFixed(2)}`}</p>
-        </div>
-        <div className="flex font-medium justify-between p-2.5 my-2.5 border-b-2 border-b-[#999999]">
-          <p>Shipping: </p>
-          <p className="text-green-600">Free</p>
-        </div>
-        <div className="flex font-medium justify-between p-2.5 my-2.5">
-          <p>Total: </p>
-          <p>{`$${totalPrice.toFixed(2)}`}</p>
-        </div>
-      </div>
+      {/* Summery */}
+      <SummeryCard/>
 
+      {/* Payment Mode */}
       <div>
         <div className="flex justify-between">
           <div className="my-3 flex" onClick={() => payementMode("Bank")}>
@@ -98,25 +99,12 @@ function Checkout() {
           />
           <p className="font-medium text-xl">Cash on Delivery</p>
         </div>
-        <div className="flex  w-[38.7vw] my-4">
-          <input
-            type="text"
-            placeholder="Coupon Code"
-            className="focus:outline-none border-2 border-[#252525] rounded-sm p-2 h-12 w-64 mr-5"
-          />
-          <div className="flex flex-col items-center">
-            <button
-              className="bg-[#DB4444] text-white rounded-sm p-3 w-48"
-              onClick={handleApplyCoupon}
-            >
-              Apply Coupon
-            </button>
-            {!couponValid && (
-              <p className="text-red-500 mt-2 font-medium">Invalid Coupon</p>
-            )}
-          </div>
-        </div>
-        <button className="bg-[#DB4444] text-white rounded-sm p-3 w-44 Place Order my-3" onClick={()=>navigate("/orderPlaced")}>
+
+        {/* Coupon */}
+        <Coupon/>
+
+        {/* Place Order */}
+        <button className="bg-[#DB4444] text-white rounded-sm p-3 w-44 Place Order my-3" onClick={handlePlaceOrder}>
           Place Order
         </button>
       </div>

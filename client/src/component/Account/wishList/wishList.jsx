@@ -1,29 +1,20 @@
 // Hooks
-import { useNavigate } from "react-router-dom";
+import { Context } from "@/context";
+import { useContext } from "react";
 
-// SVGs
-import Emptywishlist from "../../../assets/Account assets/wishlist/emptyWishlist.svg"
+// Product Component
+import ProductCard from "@/component/home component/Product Card/productCard";
 
-function WishList() {
-  const Navigate = useNavigate();
-  
-  // navigate to Home Page
-  const handleButton = ()=>{
-    Navigate("/");
-  }
+function Wishlist(){
+    const {wishlistProducts} = useContext(Context);
 
-  return (
-    <>
-      <div className="flex justify-center items-center flex-col">
-        <img src={Emptywishlist} alt="empty box" className="h-64" />
-        <h1 className="text-3xl mb-2">Your wishList is empty!</h1>
-        <p className="text-[#808080]">Explore more and shortList some items</p>
-        <button className="bg-[#Db4444] text-white p-3 w-44 rounded-md my-4" onClick={handleButton}>
-          Shop Now
-        </button>
-      </div>
-    </>
-  );
+    return(
+        <div className="grid grid-cols-5 w-[88vw] mx-20">
+          {wishlistProducts.map((product) => (
+            <ProductCard key={product.id} product={product} url={"trash"} />
+          ))}
+        </div>
+    );
 }
 
-export default WishList;
+export default Wishlist;

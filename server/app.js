@@ -12,10 +12,10 @@ const app = express(); //express App
 const jwt_Secret = process.env.JWT_SECRET;
 
 // MiddleWare 
-app.use(cors());
+app.use(cors());  
 app.use(express.json());
 app.use(passport.initialize());
- 
+  
 // Google OAuth Logic 
 passport.use(
   new GoogleStrategy(

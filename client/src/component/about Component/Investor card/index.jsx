@@ -6,7 +6,7 @@ import Twitter from "../../../assets/About assets/Investor Card/X.svg"
 // PropTypes
 import PropTypes from 'prop-types';
 
-function InvestorCard({srcPath,name,detail,width}) {
+function InvestorCard({srcPath,name,detail,width = "100%"}) {
   return (
     <div className="w-1/5 mx-5"  >
       <div className="bg-[#F5F5F5] rounded-lg flex justify-center items-end h-[70%]">
@@ -14,6 +14,7 @@ function InvestorCard({srcPath,name,detail,width}) {
       </div>
       <h2 className="text-4xl font-medium mt-2.5">{name}</h2>
       <p className="text-base">{detail}</p>
+      {/* Social Media Link */}
       <div className="w-[7%] flex my-2.5">
         <img src={Twitter} alt="" className="mr-3" />
         <img src={Instagram} alt="" className="mr-3" />
@@ -29,11 +30,6 @@ InvestorCard.propTypes = {
   name: PropTypes.string,
   detail: PropTypes.string,
   width: PropTypes.string,
-}
-
-// Creating default props
-InvestorCard.defaultProps = {
-  width: "100%",
 }
 
 export default InvestorCard;

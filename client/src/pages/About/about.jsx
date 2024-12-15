@@ -5,8 +5,8 @@ import Path from "@/component/common component/pages path/path";
 import Footer from "@/component/common component/footer/footer";
 
 // About component
-import InvestorCard from "@/component/about Component/Invertor card";
-import AboutCard from "@/component/about Component/About-card";
+import InvestorCard from "@/component/about Component/Investor card";
+import AboutCard from "@/component/about Component/About card";
 
 // Images and Svgs
 import TomCruise from "../../assets/About assets/Tom-Cruise.png"

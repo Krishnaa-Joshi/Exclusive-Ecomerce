@@ -5,18 +5,24 @@ import NavBar from "@/component/common component/Navbar/navbar";
 
 // Component
 import ProductCard from "@/component/home component/Product Card/productCard.jsx";
-import WishList from "@/component/Account/wishList/wishList";
+import SectionHeading from "@/component/home component/Section heading/section";
+import Wishlist from "@/component/Account/wishList/wishlist";
+import EmptyState from "@/component/Account/Empty State/emptyState";
 
 // Hooks
 import { Context } from "@/context";
 import { useContext, useMemo } from "react";
-import SectionHeading from "@/component/home component/Section heading/section";
+
+// SVGs
+import EmptywishlistImg from "../../assets/Account assets/wishlist/emptyWishlist.svg"
+import { useNavigate } from "react-router-dom";
 
 function WishListPage() {
-  const { products, wishlistProducts, setWhishlistProducts, setCartProducts } = useContext(Context);
-
+  const { products, wishlistProducts, setWhishlistProducts, setCartProducts,setCategoryProducts } = useContext(Context);
+  const navigate = useNavigate();
   const quantity = wishlistProducts.length;
 
+  //Handle Move to Bag Button
   const handleMoveToBag = () => {
     setCartProducts((prev) => {
       const newProducts = wishlistProducts.filter(
@@ -33,9 +39,16 @@ function WishListPage() {
     setWhishlistProducts([]);
   };
 
+  // suffled Products
   const shuffledProducts = useMemo(() => {
     return [...products].sort(() => Math.random() - 0.5).slice(0, 5);
   }, [products]);
+
+   // Handle View All products
+   const handleViewAllProducts = () => {
+    setCategoryProducts(products);
+    navigate("/category");
+  };
 
   return (
     <>
@@ -43,30 +56,35 @@ function WishListPage() {
       <NavBar />
       <div></div>
       <div className="flex justify-between mx-24 items-center h-44">
+        {/* Display Quantity */}
         <div className="font-medium text-lg">
           <h1>Wishlist {`( ${quantity} )`}</h1>
         </div>
+        {/* Move to bag */}
         <button className="p-3 border-2 border-[#808080] rounded-md font-medium w-44" onClick={()=>handleMoveToBag()}>
           Move All To Bag
         </button>
       </div>
+
       {quantity > 0 ? (
-        <div className="grid grid-cols-5 w-[88vw] mx-20">
-          {wishlistProducts.map((product) => (
-            <ProductCard key={product.id} product={product} url={"trash"} />
-          ))}
-        </div>
+        // Show Wishlsit Products
+        <Wishlist/>
       ) : (
+        // Empty Wishlist
         <div className="flex justify-center">
-          <WishList />
+          <EmptyState img={EmptywishlistImg} heading={"Your wishList is empty!"} subLine={"Explore more and shortList some items"}/>
         </div>
       )}
+
+      {/* Just for you Section */}
       <div className="flex justify-between mx-[70px] items-center h-44">
         <SectionHeading heading={"Just For You"} />
-        <button className="p-3 border-2 border-[#808080] rounded-md font-medium w-36">
+        {/* Button */}
+        <button className="p-3 border-2 border-[#808080] rounded-md font-medium w-36" onClick={handleViewAllProducts}>
           See All
         </button>
       </div>
+      {/* Products */}
       <div className="grid grid-cols-5 w-[90vw] mx-20 mb-44">
         {shuffledProducts.map((product) => (
           <ProductCard key={product.id} product={product} url={"wishlist"} />

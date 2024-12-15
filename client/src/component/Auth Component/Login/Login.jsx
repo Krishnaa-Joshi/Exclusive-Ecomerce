@@ -1,3 +1,4 @@
+// Hooks and Library
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -51,6 +52,8 @@ function Login() {
       localStorage.setItem("token", response.data.token);
       console.log(response.data.token);
       navigate("/"); //navigate to home Page
+      window.location.reload();
+
     } catch (err) {
       console.error(err);
       if (err.response?.data?.error) {
@@ -67,6 +70,7 @@ function Login() {
     <div className="w-[54vw] h-[90vh] my-28 flex flex-col justify-center items-center">
       <h1 className="text-5xl font-medium my-2.5">Log in to Exclusive</h1>
       <h3 className="font-medium w-1/2 my-2.5">Enter your details below</h3>
+      {/* Error Display */}
       {errors.global && (
         <p className="text-red-600 text-lg font-medium text-center mb-5">
           {errors.global}
@@ -77,6 +81,7 @@ function Login() {
         className="flex flex-col w-1/2 mt-4"
         onSubmit={handleSubmit}
       >
+        {/* Email or Phone No. */}
         <input
           type="text"
           name="emailOrPhone"
@@ -91,6 +96,7 @@ function Login() {
           </p>
         )}
 
+        {/* Password */}
         <input
           type="password"
           name="password"
@@ -105,6 +111,7 @@ function Login() {
           </p>
         )}
 
+        {/* Submit Button */}
         <div className="flex w-[26vw] justify-between text-lg">
           <input
             type="submit"
@@ -114,6 +121,8 @@ function Login() {
               isSubmitting && "opacity-50 cursor-not-allowed"
             }`}
           />
+
+          {/* Forget Password */}
           <button
             type="button"
             onClick={() => navigate("/forgot-password")}

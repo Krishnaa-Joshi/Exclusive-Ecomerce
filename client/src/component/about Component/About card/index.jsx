@@ -59,15 +59,4 @@ AboutCard.propTypes = {
   width: PropTypes.string,
 };
 
-// Creating default props
-AboutCard.defaultProps = {
-  color1: "#C1C0C1",
-  color2: "black",
-  box: true,
-  fontSize: "2.5rem",
-  fontWeight: "500",
-  mBottom: true,
-  width: "18%",
-};
-
 export default AboutCard;

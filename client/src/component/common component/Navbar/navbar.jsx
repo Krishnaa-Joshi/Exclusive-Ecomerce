@@ -16,42 +16,24 @@ import wishlist from "../../../assets/Navbar assets/wishlist.svg";
 function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentPage, setCurrentPage, setIsLogin, setSection, isAuth, setCategoryProducts, search, setSearch } =
+  const { currentPage, setCurrentPage, setIsLogin, setSection, isAuth, handleSearch, setSearch} =
     useContext(Context);
   const [dropDown, setDropDown] = useState(false);
-  const [error, setError] = useState("");
+  const [searchVal,setSearchVal] = useState("");
 
-  const handleSearch = async () => {
-    if (search.trim() === "") {
-      setError("Please enter a search term");
-      setCategoryProducts([]);
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-      return;
-    }
+  // handle Search button
+  const handleSeachButton = () =>{
+    setSearch(searchVal);
+    handleSearch();
+  }
 
-    setError(""); // Clear any previous error message
-    try {
-
-      const response = await fetch(
-        `https://dummyjson.com/products/search?q=${search}`
-      );
-      const data = await response.json();
-      setCategoryProducts(data.products);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      setError("Something went wrong. Please try again later.");
-    }
-
-    navigate("/category")
-  };
-
+  // handle page location
   useEffect(() => {
     const currentPath = location.pathname.slice(1);
     setCurrentPage(currentPath || "");
   }, [location, setCurrentPage]);
 
+  // page switch
   const handleClick = (page, section = "") => {
     if (page === "signUp") {
       setIsLogin(false);
@@ -61,20 +43,28 @@ function NavBar() {
     navigate(`/${page}`);
   };
 
+  // handle DropDown
   const handleDropDown = () => {
-    setDropDown((prev) => !prev); // Toggle dropdown state
+    setDropDown((prev) => !prev); 
   };
+
+  // handle Logout
+  const handleLogOut = ()=>{
+    localStorage.removeItem("token");
+    navigate("/signUp");
+  }
 
   return (
     <div className="flex justify-between items-center h-20 border-b-[1px] border-b-[#D9DbE9]">
       <div className="flex w-2/3">
         {/* logo */}
         <div className="w-2/5 flex justify-center">
-          <h3 className="font-bold text-2xl">Exclusive</h3>
+          <h3 className="font-bold text-2xl cursor-pointer" onClick={()=>navigate("/")}>Exclusive</h3>
         </div>
 
         {/* Pages */}
         <ul className="flex font-medium w-[51%] justify-center text-md">
+          {/* Home */}
           <li
             onClick={() => handleClick("")}
             className={`mx-7 my-2 cursor-pointer ${
@@ -83,6 +73,7 @@ function NavBar() {
           >
             Home
           </li>
+          {/* Contact */}
           <li
             onClick={() => handleClick("contact")}
             className={`mx-7 my-2 cursor-pointer ${
@@ -91,6 +82,7 @@ function NavBar() {
           >
             Contact
           </li>
+          {/* About */}
           <li
             onClick={() => handleClick("about")}
             className={`mx-7 my-2 cursor-pointer ${
@@ -99,6 +91,7 @@ function NavBar() {
           >
             About
           </li>
+          {/* signup */}
           {!isAuth ? (
             <li
               onClick={() => handleClick("signUp")}
@@ -119,18 +112,19 @@ function NavBar() {
         <div className={`flex w-1/2 bg-[#EFF0F6] p-3 rounded-lg`}>
           <input
             type="text"
-            placeholder={error ? error : `What are you looking for?`}
+            placeholder={`What are you looking for?`}
             className="w-11/12 bg-[#EFF0F6] focus:outline-none"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={searchVal}
+            onChange={(e) => setSearchVal(e.target.value)}
           />
           <img
             src={searchIcon}
             alt="search"
             className="cursor-pointer"
-            onClick={handleSearch}
+            onClick={handleSeachButton}
           />
         </div>
+
         {/* wishList */}
         <img
           src={wishlist}
@@ -138,6 +132,7 @@ function NavBar() {
           onClick={() => handleClick("wishlist", "wishList")}
           className="ml-4 mr-2 cursor-pointer"
         />
+        
         {/* cart */}
         <img
           src={cart}
@@ -145,6 +140,7 @@ function NavBar() {
           onClick={() => handleClick("cart")}
           className="mx-2 cursor-pointer"
         />
+        
         {/* Account */}
         {isAuth && (
           <img
@@ -177,8 +173,7 @@ function NavBar() {
             <li
               className="flex m-5"
               onClick={() => {
-                localStorage.removeItem("token");
-                navigate("/signUp");
+                handleLogOut()
               }}
             >
               <img src={logout} alt="Logout" />

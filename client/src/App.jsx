@@ -3,7 +3,7 @@ import HomePage from "./pages/Home/home";
 import AboutPage from "./pages/About/about";
 import ContactPage from "./pages/Contact/contact";
 import CartPage from "./pages/Cart/cart";
-import WishListPage from "./pages/wishList/wishList";
+import WishListPage from "./pages/wishList/wishListPage";
 import UserAccoutPage from "./pages/Account/account";
 import NotFoundPage from "./pages/Not Found/404";
 import AuthPage from "./pages/Auth Page/AuthPage";
@@ -12,6 +12,7 @@ import ProductDetailsPage from "./pages/Product details page/productDetailPage";
 import OrderPlaced from "./pages/Order Place/orderPlaced";
 import CategoryPage from "./pages/Category Page/categoryPage";
 import ProtectedRoute from "./component/Protected Routes/protectedRoutes";
+import FAQPage from "./pages/FAQs/FaqPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="FAQs" element={<FAQPage/>} />
         <Route
           path="/cart"
           element={

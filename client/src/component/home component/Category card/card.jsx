@@ -10,6 +10,7 @@ function CateoryCard({ url, title,category }) {
   const navigate = useNavigate();
   const { fetchProductsByCategory } = useContext(Context);
 
+  // Fetch Category Product and Navigate to Category Page
   const handleCategory = () => {
     fetchProductsByCategory(category);
     navigate("/category");

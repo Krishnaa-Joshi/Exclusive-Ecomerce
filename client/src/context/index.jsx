@@ -4,29 +4,47 @@ import PropTypes from "prop-types"; // Import prop-types for validation
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { isAuthenticated } from "../context/Auth/auth.js";
+import { useNavigate } from "react-router-dom";
 
 export const Context = createContext(null);
 
 function ContextProvider({ children }) {
-  const [isLogin, setIsLogin] = useState(false); // handle switch between signup and login component
-  const [isAuth, setIsAuth] = useState(isAuthenticated()); // check user is login or not
-  const [products, setProducts] = useState([]); // store products
-  const [currentPage, setCurrentPage] = useState(""); // handle switch between different pages
+  const navigate = useNavigate();
+
+  // Handle Store items
+  const [profileData, setProfileData] = useState({}); // user Details
+  const [products, setProducts] = useState([]); // products
+  const [wishlistProducts, setWhishlistProducts] = useState([]); // wishlist product
+  const [cartProducts, setCartProducts] = useState([]); // cart products
+  const [categoryProducts, setCategoryProducts] = useState([]); // Category Products
+
+  // Handle Switch
+  const [isLogin, setIsLogin] = useState(false); // signup and login component
+  const [currentPage, setCurrentPage] = useState(""); // different pages
+  const [editing, setEditing] = useState(false); // account page component
+  const [addAddress, setAddAddress] = useState(false); // address  component
+  const [section, setSection] = useState("profile"); // section of Account Page
+
+  // Handle Message state
   const [error, setError] = useState(""); // store Error
-  const [profileData, setProfileData] = useState({}); // store user Details
-  const [editing, setEditing] = useState(false); //handle switch between account page component
-  const [addAddress, setAddAddress] = useState(false); //handle switch between account page component
-  const [section, setSection] = useState("profile"); //handle switch between account page component
-  const [wishlistProducts, setWhishlistProducts] = useState([]); // Store wishlist product
-  const [cartProducts, setCartProducts] = useState([]); // Store cart products
+  const [errorType, setErrorType] = useState(true); //message Success or fail
+  // Handle Authentication
+  const [isAuth, setIsAuth] = useState(isAuthenticated()); // login or not
+  const [couponValid, setCouponValid] = useState(true); //Coupon Validation
+
   const [editCart, setEditCart] = useState(false); // Edit CartPage Data
-  const [categoryProducts, setCategoryProducts] = useState([]); // Store Category Products 
   const [search, setSearch] = useState(() => {
     return localStorage.getItem("search") || "";
   }); // search result
 
+  // Check authentication status on app load
   useEffect(() => {
-    const token = localStorage.getItem("jwtToken"); 
+    setIsAuth(isAuthenticated());
+  }, []);
+
+  // Check if Token Expire or Not
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
     if (token) {
       try {
@@ -36,18 +54,18 @@ function ContextProvider({ children }) {
         if (exp < currentTime) {
           // Token has expired
           console.log("Token expired. Removing it from local storage.");
-          localStorage.removeItem("jwtToken");
+          localStorage.removeItem("token");
           // Redirect to login page
-          window.location.href = "/login";
+          navigate("/signUp");
         }
       } catch (error) {
         console.error("Error decoding token:", error);
-        localStorage.removeItem("jwtToken"); // Remove invalid token
+        localStorage.removeItem("token"); // Remove invalid token
       }
     }
-  }, []);
+  }, [navigate]);
 
-  // Fetch profile Data from user
+  // Fetch profile Data
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -69,7 +87,6 @@ function ContextProvider({ children }) {
         setProfileData(response.data);
       } catch (err) {
         console.error("Error fetching profile:", err.response || err);
-        setError(err.response?.data?.error || "An unexpected error occurred");
       }
     };
     fetchProfile();
@@ -89,11 +106,6 @@ function ContextProvider({ children }) {
     fetchProducts();
   }, []);
 
-  // search 
-  useEffect(() => {
-    localStorage.setItem("search", search);
-  }, [search]);
-
   // fetch Product by category
   const fetchProductsByCategory = async (category) => {
     try {
@@ -101,36 +113,39 @@ function ContextProvider({ children }) {
         `https://dummyjson.com/products/category/${category}`
       );
       const data = response.data;
-      console.log("category array: ",data.products);
-      if(category === "fragrances")
-        setSearch("perfumes");
-      else if(category === "beauty")
-        setSearch("Cosmetics");
-      else
-        setSearch(category);  
+      console.log("category array: ", data.products);
+      if (category === "fragrances") setSearch("perfumes");
+      else if (category === "beauty") setSearch("Cosmetics");
+      else setSearch(category);
       setCategoryProducts(data.products);
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }
   };
 
+  // Load search word
   useEffect(() => {
-    // Load wishlist products
+    localStorage.setItem("search", search);
+  }, [search]);
+
+  // Load products
+  useEffect(() => {
+    // Load wishlist
     const storedWishlist =
       JSON.parse(localStorage.getItem("wishlistProducts")) || [];
     console.log("Loaded wishlist from localStorage:", storedWishlist);
     setWhishlistProducts(storedWishlist);
 
-    // Load cart products with quantity
+    // Load cart with quantity
     const storedCart = JSON.parse(localStorage.getItem("cartProducts")) || [];
     console.log("Loaded cart from localStorage:", storedCart);
     setCartProducts(storedCart);
 
-    // Load category Product 
-    const storedCategory = JSON.parse(localStorage.getItem("categoryProducts")) || [];
+    // Load category
+    const storedCategory =
+      JSON.parse(localStorage.getItem("categoryProducts")) || [];
     console.log("loaded category From localStorage", storedCategory);
     setCategoryProducts(storedCategory);
-
   }, []);
 
   // Save wishlist to localStorage whenever it changes
@@ -145,17 +160,13 @@ function ContextProvider({ children }) {
     localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
   }, [cartProducts]);
 
-  // save CategoryProduct to LocalStorage 
+  // save CategoryProduct to LocalStorage
   useEffect(() => {
     console.log("Saving category Product to localStorage:", categoryProducts);
     localStorage.setItem("categoryProducts", JSON.stringify(categoryProducts));
   }, [categoryProducts]);
 
-  // Check authentication status on app load
-  useEffect(() => {
-    setIsAuth(isAuthenticated());
-  }, []);
-
+  // handle Quantity increment
   const handleIncrement = (id) => {
     console.log(`Incrementing quantity for product ID: ${id}`);
     setCartProducts((prev) => {
@@ -171,6 +182,7 @@ function ContextProvider({ children }) {
     });
   };
 
+  // handle Quantity decrement
   const handleDecrement = (id) => {
     console.log(`Decrementing quantity for product ID: ${id}`);
     setCartProducts((prev) => {
@@ -192,6 +204,34 @@ function ContextProvider({ children }) {
 
       return updatedCart;
     });
+  };
+
+  // handle Search
+  const handleSearch = async () => {
+    // if search is empty
+    if (search.trim() === "") {
+      setErrorType(false);
+      setError("Please enter a search term");
+      setCategoryProducts([]);
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return;
+    }
+
+    setError(""); // Clear any previous error message
+    try {
+      const response = await fetch(
+        `https://dummyjson.com/products/search?q=${search}`
+      );
+      const data = await response.json();
+      setCategoryProducts(data.products);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setError("Something went wrong. Please try again later.");
+    }
+
+    navigate("/category")
   };
 
   return (
@@ -224,10 +264,15 @@ function ContextProvider({ children }) {
         categoryProducts,
         setCategoryProducts,
         fetchProductsByCategory,
-        search, 
+        search,
         setSearch,
-        error, 
-        setError
+        error,
+        setError,
+        errorType,
+        setErrorType,
+        couponValid,
+        setCouponValid,
+        handleSearch,
       }}
     >
       {children}
