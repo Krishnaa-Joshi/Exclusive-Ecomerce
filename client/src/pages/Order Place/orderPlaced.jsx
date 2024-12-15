@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { Context } from "@/context";
 import SummaryProductCard from "@/component/Summery ProductCard/SummeryProducrCard";
 import { useNavigate } from "react-router-dom";
+import Button from "@/component/Button/Button";
 
 function OrderPlaced() {
   const { cartProducts } = useContext(Context);
@@ -54,9 +55,7 @@ function OrderPlaced() {
           <p className="text-xl text-[#999999] ">{`Your Order No is ${orderNo}`}</p>
 
           {/* Order More Button */}
-          <button className="bg-[#DB4444] p-3 rounded-sm w-40 text-white mt-8" onClick={()=>Navigate("/")}>
-            Order More
-          </button>
+          <Button padding="p-3" width="w-40" rounded="rounded-sm" handleFunc={()=>Navigate("/")} title="Order More" otherStyle="mt-8"/>
         </div>
 
         {/* Order Summery */}

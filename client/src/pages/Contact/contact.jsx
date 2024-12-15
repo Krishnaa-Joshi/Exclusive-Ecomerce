@@ -11,6 +11,7 @@ import { useState } from "react";
 import Phone from "../../assets/Contact assets/phone.svg"
 import Message from "../../assets/Contact assets/message.svg"
 import ContactInfo from "@/component/Contact Component/ContactInfo";
+import Button from "@/component/Button/Button";
 
 function ContactPage() {
 
@@ -56,7 +57,7 @@ function ContactPage() {
             <div>
                 <textarea name="query" value={message.query} onChange={handleChange}  placeholder="Your Message" className="bg-[#F5F5F5] p-2.5 rounded-md w-[46vw] h-56 mx-2 my-8 focus:outline-none" ></textarea>
             </div>
-            <input type="submit" value="send Message" className="bg-[#db4444] text-white w-44 p-4 rounded-md relative left-[35vw]"/>
+            <Button title="Send Message" rounded="rounded-md" width="w-44" padding="p-4" otherStyle="relative left-[35vw]" />
         </form>
       </div>
 

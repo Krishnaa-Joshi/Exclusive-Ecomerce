@@ -1,5 +1,5 @@
 // Hooks
-import { useContext, useState } from "react";
+import { Children, useContext, useState } from "react";
 import { Context } from "@/context";
 
 // Checkout Component
@@ -15,9 +15,17 @@ import { useNavigate } from "react-router-dom";
 import SummeryCard from "@/component/Summery Card/summeryCard";
 import Message from "@/component/Message/message";
 import Coupon from "@/component/Coupon/coupon";
+import Button from "@/component/Button/Button";
 
 function Checkout() {
-  const { cartProducts,error,setError,setErrorType,profileData,setSection } = useContext(Context);
+  const {
+    cartProducts,
+    error,
+    setError,
+    setErrorType,
+    profileData,
+    setSection,
+  } = useContext(Context);
   const [check, setCheck] = useState("COD");
   const navigate = useNavigate();
 
@@ -33,23 +41,19 @@ function Checkout() {
     );
   }
 
-  const handlePlaceOrder = ()=>{
-    if(isAddressEmpty()){
+  const handlePlaceOrder = () => {
+    if (isAddressEmpty()) {
       setErrorType(false);
       setError("Address is Missing");
       setSection("Address");
-      navigate("/account")
-    }
-    else
-      navigate("/orderPlaced")
-  }
+      navigate("/account");
+    } else navigate("/orderPlaced");
+  };
 
   return (
     <div className="w-96">
       {/* Error */}
-      {error ? (
-        <Message/>
-      ) : null}
+      {error ? <Message /> : null}
 
       {/* Products */}
       <div
@@ -58,13 +62,13 @@ function Checkout() {
         }`}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {cartProducts.map((product) => (
-          <BillingProduct key={product.id} product={product} />
-        ))}
+        {Children.toArray(
+          cartProducts.map((product) => <BillingProduct product={product} />)
+        )}
       </div>
 
       {/* Summery */}
-      <SummeryCard/>
+      <SummeryCard />
 
       {/* Payment Mode */}
       <div>
@@ -101,12 +105,10 @@ function Checkout() {
         </div>
 
         {/* Coupon */}
-        <Coupon/>
+        <Coupon />
 
         {/* Place Order */}
-        <button className="bg-[#DB4444] text-white rounded-sm p-3 w-44 Place Order my-3" onClick={handlePlaceOrder}>
-          Place Order
-        </button>
+        <Button rounded="rounded-sm" padding="p-3" width="w-44" otherStyle="Order my-3" title="Place Order" handleFunc={handlePlaceOrder}/>
       </div>
     </div>
   );

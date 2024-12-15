@@ -28,10 +28,11 @@ import WomenCollection from "../../assets/Home assets/Coming Soon/womenCollectio
 import PlayStations from "../../assets/Home assets/Coming Soon/playStation.svg";
 import Speakers from "../../assets/Home assets/Coming Soon/speaker.svg";
 import GucciPerfume from "../../assets/Home assets/Coming Soon/gucciPerfume.svg";
+import Button from "@/component/Button/Button";
 
 function HomePage() {
   const location = useLocation();
-  const { products, setCategoryProducts } = useContext(Context);
+  const { products, setCategoryProducts,setSearch } = useContext(Context);
   const navigate = useNavigate();
 
   // Memoize randomized products
@@ -56,6 +57,7 @@ function HomePage() {
   // Handle View All products
   const handleViewAllProducts = () => {
     setCategoryProducts(products);
+    setSearch("All Product");
     navigate("/category");
   };
 
@@ -80,12 +82,7 @@ function HomePage() {
         </div>
 
         <div className="w-full flex justify-center my-5 ">
-          <button
-            className="bg-[#DB4444] p-2.5 text-white w-48 rounded-sm"
-            onClick={handleViewAllProducts}
-          >
-            View All Products
-          </button>
+          <Button width="w-48" rounded="rounded-sm" padding="p-2.5" handleFunc={handleViewAllProducts} title="View All Products"/>
         </div>
       </div>
 
@@ -132,21 +129,9 @@ function HomePage() {
           {products.slice(0, 10).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
-          {/* {Children.toArray(
-            products.map((item) => (
-              <>
-                <ProductCard product={item} />
-              </>
-            ))
-          )} */}
         </div>
         <div className="w-full flex justify-center my-5">
-          <button
-            className="bg-[#DB4444] p-2.5 text-white w-48 rounded-sm"
-            onClick={handleViewAllProducts}
-          >
-            View All Products
-          </button>
+          <Button width="w-48" rounded="rounded-sm" padding="p-2.5" handleFunc={handleViewAllProducts} title="View All Products"/>
         </div>
       </div>
 

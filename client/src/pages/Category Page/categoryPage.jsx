@@ -72,7 +72,7 @@ function CategoryPage() {
 
       {/* Searched Result Heading */}
       <div className="mx-10">
-        <p className="text-5xl font-semibold my-4">{search.charAt(0).toUpperCase() + search.slice(1) || "All products"}</p>
+        <p className="text-5xl font-semibold my-4">{search.charAt(0).toUpperCase() + search.slice(1)}</p>
         <p className="text-[#999999] font-medium">{`${categoryProducts.length} Products Found`}</p>
       </div>
 

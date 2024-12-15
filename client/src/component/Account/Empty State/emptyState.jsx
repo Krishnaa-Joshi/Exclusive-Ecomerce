@@ -5,6 +5,7 @@ import { useContext } from "react";
 
 // PropTypes
 import PropTypes from "prop-types";
+import Button from "@/component/Button/Button";
 
 function EmptyState({ img,heading,subLine,button = "Shop Now" }) {
 
@@ -27,12 +28,7 @@ function EmptyState({ img,heading,subLine,button = "Shop Now" }) {
         <p className="text-[#808080]">
           {subLine}
         </p>
-        <button
-          className="bg-[#Db4444] text-white p-3 w-44 rounded-md my-4"
-          onClick={handleButton}
-        >
-          {button}
-        </button>
+        <Button handleFunc={handleButton} padding="p-3" width="w-44" rounded="rounded-md" otherStyle="my-4" title={button}/>
       </div>
     </div>
   );

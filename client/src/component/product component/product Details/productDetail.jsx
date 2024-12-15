@@ -19,6 +19,7 @@ import PropTypes from "prop-types";
 
 // Component
 import DeliveryService from "../Delivery Service/service";
+import Button from "@/component/Button/Button";
 
 function ProductDetails({ product }) {
   const navigate = useNavigate();
@@ -150,12 +151,7 @@ function ProductDetails({ product }) {
         )}
         {/* Buy Now Button */}
         <div>
-          <button
-            className="bg-[#DB4444] p-2.5 text-white rounded-sm w-40 m-3 cursor-pointer"
-            onClick={handleBuyNow}
-          >
-            Buy Now
-          </button>
+          <Button padding="p-2.5" rounded="rounded-sm" width="w-40" handleFunc={handleBuyNow} title="Buy Now" otherStyle="m-3 cursor-pointer"/>
         </div>
         {/* Wishlist */}
         <div
