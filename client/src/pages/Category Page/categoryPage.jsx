@@ -8,11 +8,13 @@ import { useContext, useState } from "react";
 import { Context } from "@/context";
 
 // SVGs 
-import Banner from "../../assets/Home assets/banner.svg";
-import searchIcon from "../../assets/Home assets/searchIcon.svg";
+import Banner from "../../assets/category assests/banner.svg";
+import searchIcon from "../../assets/category assests/searchIcon.svg";
+import NotFound from "../../assets/category assests/notFound.svg"
 
 // Component
 import ProductCard from "@/component/home component/Product Card/productCard.jsx";
+import EmptyState from "@/component/Account/Empty State/emptyState";
 
 function CategoryPage() {
   const { categoryProducts,fetchProductsByCategory,setSearch, search,handleSearch } = useContext(Context);
@@ -85,8 +87,8 @@ function CategoryPage() {
         </div>
       ) : (
       // No products
-        <div className="flex justify-center items-center text-5xl h-72 ">
-          <p>No products Found</p>
+        <div className="flex justify-center mb-20  min-h-72 max-h-[110vh] ">
+          <EmptyState img={NotFound} heading="No Result Found" button="Try Again" subLine="We couldn't find what you searched for."/>
         </div>
       )}
 

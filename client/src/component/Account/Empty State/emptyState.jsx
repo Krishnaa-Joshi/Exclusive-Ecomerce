@@ -7,7 +7,7 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import Button from "@/component/Button/Button";
 
-function EmptyState({ img,heading,subLine,button = "Shop Now" }) {
+function EmptyState({ img,heading,subLine,button = "Shop Now", }) {
 
     const navigate = useNavigate();
     const { setAddAddress,section,currentPage } = useContext(Context)
@@ -16,6 +16,12 @@ function EmptyState({ img,heading,subLine,button = "Shop Now" }) {
     const handleButton = ()=>{
         if(section === "Address")
             setAddAddress(true);
+        else if(currentPage === "category"){
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth', 
+          });
+        }
         else
             navigate("/");
     }
