@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import DisplayCartProducts from "../Display Cart Products/displayCartProducts";
 import SummeryCard from "@/component/Summery Card/summeryCard";
 import Coupon from "@/component/Coupon/coupon";
+import Button from "@/component/Button/Button";
 
 function DisplayCart() {
   const { editCart, setEditCart } = useContext(Context);
@@ -72,12 +73,7 @@ function DisplayCart() {
         <SummeryCard />
         {/* Checkout Button */}
         <div className="flex justify-center">
-          <button
-            className="bg-[#DB4444] text-white rounded-sm p-3 w-60 cursor-pointer"
-            onClick={() => navigate("/checkout")}
-          >
-            Procees To Checkout
-          </button>
+          <Button rounded="rounded-sm" padding="p-3" width="w-60" otherStyle="cursor-pointer" title="Procees To Checkout" handleFunc={() => navigate("/checkout")}/>
         </div>
       </div>
     </div>

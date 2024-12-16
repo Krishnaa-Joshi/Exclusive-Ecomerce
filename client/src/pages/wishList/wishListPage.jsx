@@ -11,14 +11,14 @@ import EmptyState from "@/component/Account/Empty State/emptyState";
 
 // Hooks
 import { Context } from "@/context";
-import { useContext, useMemo } from "react";
+import { Children, useContext, useMemo } from "react";
 
 // SVGs
 import EmptywishlistImg from "../../assets/Account assets/wishlist/emptyWishlist.svg"
 import { useNavigate } from "react-router-dom";
 
 function WishListPage() {
-  const { products, wishlistProducts, setWhishlistProducts, setCartProducts,setCategoryProducts } = useContext(Context);
+  const { products, wishlistProducts, setWhishlistProducts, setCartProducts,setCategoryProducts,setSearch } = useContext(Context);
   const navigate = useNavigate();
   const quantity = wishlistProducts.length;
 
@@ -47,6 +47,7 @@ function WishListPage() {
    // Handle View All products
    const handleViewAllProducts = () => {
     setCategoryProducts(products);
+    setSearch("All Product");
     navigate("/category");
   };
 
@@ -86,9 +87,11 @@ function WishListPage() {
       </div>
       {/* Products */}
       <div className="grid grid-cols-5 w-[90vw] mx-20 mb-44">
-        {shuffledProducts.map((product) => (
-          <ProductCard key={product.id} product={product} url={"wishlist"} />
-        ))}
+        {Children.toArray(
+          shuffledProducts.map((product) => (
+            <ProductCard product={product} url={"wishlist"} />
+          ))
+        )}
       </div>
       <Footer />
     </>

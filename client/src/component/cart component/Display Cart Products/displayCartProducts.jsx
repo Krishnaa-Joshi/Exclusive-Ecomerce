@@ -1,6 +1,6 @@
 // Hooks
 import { Context } from "@/context";
-import { useContext } from "react";
+import { Children, useContext } from "react";
 
 // Cart Products
 import CartProduct from "../cart Product/cartProduct";
@@ -10,9 +10,9 @@ function DisplayCartProducts() {
 
   return (
     <div>
-      {cartProducts.map((product) => (
-        <CartProduct key={product.id} product={product} />
-      ))}
+      {Children.toArray(
+        cartProducts.map((product) => <CartProduct product={product} />)
+      )}
     </div>
   );
 }
