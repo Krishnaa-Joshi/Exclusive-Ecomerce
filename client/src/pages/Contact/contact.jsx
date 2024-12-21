@@ -22,6 +22,7 @@ function ContactPage() {
     query: "",
   })
 
+  //onChange 
   const handleChange = (e) =>{
     setMessage({
       ...message,

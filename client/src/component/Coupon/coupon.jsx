@@ -1,5 +1,8 @@
+// Hooks
 import { Context } from "@/context";
 import { useContext } from "react";
+
+// Component
 import Button from "../Button/Button";
 
 function Coupon() {

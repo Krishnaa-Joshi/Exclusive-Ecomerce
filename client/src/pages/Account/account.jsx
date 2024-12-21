@@ -34,7 +34,6 @@ function UserAccoutPage() {
     error,
   } = useContext(Context);
 
-  console.log(orderedDetails);
   const quantity = wishlistProducts.length;
   const navigate = useNavigate();
 
@@ -64,6 +63,7 @@ function UserAccoutPage() {
     );
   };
 
+  // view Order Button Logic
   const handleViewOrder = (index) => {
     setOrderedDetails((prevDetails) =>
       prevDetails.map((order, i) =>
@@ -72,8 +72,8 @@ function UserAccoutPage() {
     );
   };
 
+  // Close order Button Logic
   const handleCloseOrder = (index) => {
-
     setOrderedDetails((prevDetails) =>
       prevDetails.map((order, i) =>
         i === index ? { ...order, viewOrder: false } : order
@@ -169,37 +169,39 @@ function UserAccoutPage() {
             />
           ) : (
             <div
-  className="flex flex-col items-center w-[61vw] overflow-y-auto max-h-screen relative bottom-14"
-  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
->
-  {Children.toArray(
-    orderedDetails.every((order) => !order.viewOrder)
-      ? // Render all orders if all viewOrder values are false
-        orderedDetails.map((order, index) => (
-          <OrderCard
-            order={order}
-            index={index}
-            handleCancel={handleCancel}
-            handleViewOrder={handleViewOrder}
-            handleCloseOrder={handleCloseOrder}
-          />
-        ))
-      : // Render only orders with viewOrder set to true
-        orderedDetails
-          .map((order, index) => ({ ...order, originalIndex: index })) // Attach original index
-          .filter((order) => order.viewOrder)
-          .map((order) => (
-            <OrderCard
-              order={order}
-              index={order.originalIndex} // Use original index
-              handleCancel={handleCancel}
-              handleViewOrder={handleViewOrder}
-              handleCloseOrder={handleCloseOrder}
-            />
-          ))
-  )}
-</div>
-
+              className="flex flex-col items-center w-[61vw] overflow-y-auto max-h-screen relative bottom-14"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            >
+              {Children.toArray(
+                orderedDetails.every((order) => !order.viewOrder)
+                  ? // Render all orders if all viewOrder values are false
+                    orderedDetails.map((order, index) => (
+                      <OrderCard
+                        order={order}
+                        index={index}
+                        handleCancel={handleCancel}
+                        handleViewOrder={handleViewOrder}
+                        handleCloseOrder={handleCloseOrder}
+                      />
+                    ))
+                  : // Render only orders with viewOrder set to true
+                    orderedDetails
+                      .map((order, index) => ({
+                        ...order,
+                        originalIndex: index,
+                      })) // Attach original index
+                      .filter((order) => order.viewOrder)
+                      .map((order) => (
+                        <OrderCard
+                          order={order}
+                          index={order.originalIndex} 
+                          handleCancel={handleCancel}
+                          handleViewOrder={handleViewOrder}
+                          handleCloseOrder={handleCloseOrder}
+                        />
+                      ))
+              )}
+            </div>
           )
         ) : null}
 

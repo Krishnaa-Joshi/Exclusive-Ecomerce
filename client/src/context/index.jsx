@@ -26,7 +26,6 @@ function ContextProvider({ children }) {
   const [editing, setEditing] = useState(false); // account page component
   const [addAddress, setAddAddress] = useState(false); // address  component
   const [section, setSection] = useState("profile"); // section of Account Page
-  const [viewOrder,setViewOrder] = useState(false); // view Order
 
   // Handle Message state
   const [error, setError] = useState(""); // store Error
@@ -309,8 +308,6 @@ function ContextProvider({ children }) {
         handleSearch,
         orderedDetails,
         setOrderedDetails,
-        viewOrder,
-        setViewOrder,
         orderNoGenrator,
         totalPrice
       }}

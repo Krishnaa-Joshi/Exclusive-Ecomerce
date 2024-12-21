@@ -150,7 +150,7 @@ const ProductCard = ({ product, url }) => {
             alt="decrement"
             onClick={() => handleDecrement(product.id)}
             className="cursor-pointer"
-          />
+          /> {/* decrement */}
           <p className="font-medium">
             {
               cartProducts.find((item) => item.id === product.id)?.quantity || 1 // Display quantity
@@ -161,7 +161,7 @@ const ProductCard = ({ product, url }) => {
             alt="increment"
             onClick={() => handleIncrement(product.id)}
             className="cursor-pointer"
-          />
+          /> {/* increment */}
         </div>
       ) : (
         <button

@@ -43,13 +43,13 @@ function EditUserDetails() {
     else setAddress((prev) => ({ ...prev, [name]: value }));
   };
 
-  // handle Cancel Button
+  // Cancel Button
   const handleCancle = () => {
     if (section === "profile") setEditing(false);
     else setAddAddress(false);
   };
 
-  // handle Submit Button
+  // Submit Button
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -104,6 +104,7 @@ function EditUserDetails() {
   return (
     <>
       <div className="mt-24 w-[45vw]">
+        {/* Heading */}
         <h1 className="text-[#DB4444] font-semibold text-xl my-4">
           {section === "profile" ? "Edit your Profile" : "Enter Your Address"}
         </h1>

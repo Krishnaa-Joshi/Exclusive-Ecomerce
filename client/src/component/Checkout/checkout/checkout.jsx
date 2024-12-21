@@ -28,15 +28,13 @@ function Checkout() {
     setSection,
     setOrderedDetails,
     orderNoGenrator,
+    totalPrice,
   } = useContext(Context);
   const [check, setCheck] = useState("COD");
   const navigate = useNavigate();
 
   // Calculate Total Price
-  const totalPrice = cartProducts.reduce(
-    (sum, product) => sum + product.price * product.quantity,
-    0
-  );
+  const total = totalPrice(cartProducts);
 
   // Switch payment Mode
   const payementMode = (Mode) => {
@@ -69,7 +67,7 @@ function Checkout() {
       // Create the new order object
       const newOrder = {
         orderNo: orderNoGenrator(),
-        totalPrice: totalPrice.toFixed(2),
+        totalPrice: total.toFixed(2),
         products: cartProducts,
         date: orderedDate,
         status: "IT'S ORDERED!",
@@ -107,6 +105,7 @@ function Checkout() {
       {/* Payment Mode */}
       <div>
         <div className="flex justify-between">
+          {/* Card */}
           <div className="my-3 flex" onClick={() => payementMode("Bank")}>
             <img
               src={check === "Bank" ? Selected : NotSelceted}
@@ -129,6 +128,7 @@ function Checkout() {
         ) : (
           ""
         )}
+        {/* Cash on Delivery */}
         <div className="flex" onClick={() => payementMode("COD")}>
           <img
             src={check === "COD" ? Selected : NotSelceted}

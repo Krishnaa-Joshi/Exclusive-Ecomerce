@@ -6,6 +6,7 @@ import axios from "axios";
 
 // SVGs
 import Google from "../../../assets/Auth Assets/Signup/google.svg"
+import Session from "../Session Expire/Session";
 
 function Signup() {
 
@@ -87,7 +88,8 @@ function Signup() {
 
   
   return (
-
+    <>
+      <Session/>
     <div className="w-[54vw] h-[90vh] my-28 flex flex-col justify-center items-center">
       <h1 className="text-5xl font-medium my-2.5">Create an Account</h1>
       <h3 className="font-medium w-1/2 my-2.5">Enter your details below</h3>
@@ -96,7 +98,7 @@ function Signup() {
         action="post"
         onSubmit={handleSubmit}
         className="flex flex-col w-1/2 mt-4"
-      >
+        >
         {/* Name */}
         <input
           type="text"
@@ -105,7 +107,7 @@ function Signup() {
           onChange={handleChange}
           placeholder="Name"
           className="border-b-2 border-b-[#808080] py-2.5 w-[26vw] my-3 focus:outline-none"
-        />
+          />
         {errors.name && (
           <p className="text-red-600 text-lg font-medium text-center">
             {errors.name}
@@ -120,7 +122,7 @@ function Signup() {
           onChange={handleChange}
           placeholder="Email or Phone Number"
           className="border-b-2 border-b-[#808080] py-2.5 w-[26vw] my-3 focus:outline-none"
-        />
+          />
         {errors.emailOrPhone && (
           <p className="text-red-600 text-lg font-medium text-center">
             {errors.emailOrPhone}
@@ -135,7 +137,7 @@ function Signup() {
           onChange={handleChange}
           placeholder="Password"
           className="border-b-2 border-b-[#808080] py-2.5 w-[26vw] my-3 focus:outline-none"
-        />
+          />
         {errors.password && (
           <p className="text-red-600 text-lg font-medium text-center">
             {errors.password}
@@ -147,7 +149,7 @@ function Signup() {
           type="submit"
           value="Create Account"
           className="bg-[#DB4444] text-[#FAFAFA] py-[15px] w-[26vw] my-[20px] cursor-pointer rounded-md focus:outline-none"
-        />
+          />
       </form>
 
         {/* Global Error */}
@@ -169,11 +171,12 @@ function Signup() {
         <p
           className="text-[#4D4D4D] border-b-2 border-b-[#808080] hover:text-black cursor-pointer font-medium"
           onClick={handleSwitch}
-        >
+          >
           Log in
         </p>
       </div>
     </div>
+    </>
   );
 }
 

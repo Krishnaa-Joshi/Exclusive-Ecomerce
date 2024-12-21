@@ -1,3 +1,4 @@
+// PropTypes
 import PropTypes from "prop-types";
 
 function Button({width,padding,rounded,handleFunc,title,otherStyle = ""}){
@@ -15,6 +16,7 @@ function Button({width,padding,rounded,handleFunc,title,otherStyle = ""}){
 
 export default Button;
 
+// Props Validation
 Button.propTypes = {
     width: PropTypes.string,
     padding: PropTypes.string,

@@ -15,9 +15,9 @@ function BillingProduct({ product }) {
   );
 }
 
+export default BillingProduct;
+
 // Validating prop types
 BillingProduct.propTypes = {
   product: PropTypes.object,
 }
-
-export default BillingProduct;

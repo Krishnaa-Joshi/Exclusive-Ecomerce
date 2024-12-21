@@ -1,9 +1,11 @@
+// Hooks
+import { useContext } from "react";
+import { Context } from "@/context";
+
 // SVGs
 import incrementBtn from "../../../assets/cart assets/increment.svg";
 import decrementBtn from "../../../assets/cart assets/decrement.svg";
 import remove from "../../../assets/cart assets/remove.svg";
-import { useContext } from "react";
-import { Context } from "@/context";
 
 // PropTypes
 import PropTypes from "prop-types";
@@ -17,6 +19,7 @@ function CartProduct({ product }) {
     handleDecrement,
   } = useContext(Context);
 
+  // Remove Button
   const handleRemove = () => {
     setCartProducts((prev) => {
       return prev.filter((item) => item.id !== product.id); // Remove the product with the matching id
