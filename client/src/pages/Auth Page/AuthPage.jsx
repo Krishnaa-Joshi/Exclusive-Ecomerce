@@ -12,26 +12,25 @@ import { Context } from "@/context";
 import { useContext } from "react";
 
 // Image
-import img from "../../assets/Auth Assets/img.avif"
+import img from "../../assets/Auth Assets/img.avif";
 
-function AuthPage(){
+function AuthPage() {
+  const { isLogin } = useContext(Context);
 
-    const { isLogin } = useContext(Context);
+  return (
+    <>
+      <HeroSection />
+      <NavBar />
+      <div className="flex">
+        <div className="h-screen w-54vw my-28">
+          <img src={img} alt="" className="w-[54vw] h-[90vh]" />
+        </div>
+        {isLogin ? <Login /> : <Signup />}
+      </div>
 
-    return(
-        <>
-            <HeroSection/>
-            <NavBar/>
-            <div className="flex">
-                <div className="h-screen w-54vw my-28">
-                    <img src={img} alt="" className="w-[54vw] h-[90vh]"/>
-                </div>
-                { isLogin ? <Login/> : <Signup/> }
-            </div>
-
-            <Footer/>
-        </>
-    )
-} 
+      <Footer />
+    </>
+  );
+}
 
 export default AuthPage;

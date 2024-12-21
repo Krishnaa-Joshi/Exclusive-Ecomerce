@@ -22,6 +22,7 @@ function UserDetails() {
 
   return (
     <div className="mt-24 w-[45vw]">
+      {/* Heading */}
       <h1
         className="text-[#DB4444] font-semibold text-xl my-4 cursor-pointer"
         onClick={section === "profile"? editProfile : editAddress}

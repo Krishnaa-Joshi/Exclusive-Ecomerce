@@ -7,34 +7,39 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import Button from "@/component/Button/Button";
 
-function EmptyState({ img,heading,subLine,button = "Shop Now", }) {
+function EmptyState({ img, heading, subLine, button = "Shop Now" }) {
+  const navigate = useNavigate();
+  const { setAddAddress, section, currentPage } = useContext(Context);
 
-    const navigate = useNavigate();
-    const { setAddAddress,section,currentPage } = useContext(Context)
-      
-    // navigate to Home Page
-    const handleButton = ()=>{
-        if(section === "Address")
-            setAddAddress(true);
-        else if(currentPage === "category"){
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth', 
-          });
-        }
-        else
-            navigate("/");
-    }
-    
+  // navigate to Home Page
+  const handleButton = () => {
+    if (section === "Address") setAddAddress(true);
+    else if (currentPage === "category") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } else navigate("/");
+  };
+
   return (
-    <div className={`mt-16 ${currentPage === 'cart' ? "w-full h-[80vh]" : "w-[58vw]"}`}>
+    <div
+      className={`mt-16 ${
+        currentPage === "cart" ? "w-full h-[80vh]" : "w-[58vw]"
+      }`}
+    >
       <div className="flex justify-center items-center flex-col">
         <img src={img} alt="empty box" className="h-64" />
-        <h1 className="text-3xl mb-2">{heading}</h1>
-        <p className="text-[#808080]">
-          {subLine}
-        </p>
-        <Button handleFunc={handleButton} padding="p-3" width="w-44" rounded="rounded-md" otherStyle="my-4" title={button}/>
+        <h1 className="text-3xl mb-2">{heading}</h1>  {/* heading */ }
+        <p className="text-[#808080]">{subLine}</p> {/* SubLine */ }
+        <Button
+          handleFunc={handleButton}
+          padding="p-3"
+          width="w-44"
+          rounded="rounded-md"
+          otherStyle="my-4"
+          title={button}
+        /> {/* Button */ }
       </div>
     </div>
   );

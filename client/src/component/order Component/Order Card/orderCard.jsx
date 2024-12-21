@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 // Component
 import OrderDetails from "../Order Details/orderDetails";
+import OrderInfo from "../order info/OrderInfo";
 
 function OrderCard({ order, index, handleCancel,handleViewOrder,handleCloseOrder }) {
   // Utility function to format the date
@@ -62,19 +63,11 @@ function OrderCard({ order, index, handleCancel,handleViewOrder,handleCloseOrder
       <div className="flex justify-between p-5 border-t-2 mx-4">
         {/* Order Details */}
         <div>
-          <div className="flex">
-            <p className="font-medium text-[#808080] mr-2">Order No.:</p>
-            <p className="font-medium">{`#${order.orderNo}`}</p>
-          </div>
-          <div className="flex">
-            <p className="font-medium text-[#808080] mr-2">Ordered Date:</p>
-            <p className="font-medium">{formatDate(order.date)}</p>
-          </div>
-          <div className="flex">
-            <p className="font-medium text-[#808080] mr-2">Total Price:</p>
-            <p className="font-medium">${order.totalPrice}</p>
-          </div>
+          <OrderInfo label="Order No.:" value={`#${order.orderNo}`}/>
+          <OrderInfo label="Ordered Date:" value={formatDate(order.date)}/>
+          <OrderInfo label="Total Price:" value={`$${order.totalPrice}`}/>
         </div>
+        
 
         {/* Action Buttons */}
         <div className="flex flex-col ml-4">

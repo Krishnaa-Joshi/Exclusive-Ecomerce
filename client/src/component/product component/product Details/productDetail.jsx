@@ -124,7 +124,7 @@ function ProductDetails({ product }) {
               alt="decrement"
               onClick={() => handleDecrement(product.id)}
               className="border-2 border-[#999999] p-2 rounded-l-md border-r-0 cursor-pointer"
-            />
+            /> {/* Decrement */}
             <p className="border-2 border-[#999999] p-1.5 w-[70px] text-center border-r-0 text-xl font-medium">
               {
                 cartProducts.find((item) => item.id === product.id)?.quantity ||
@@ -136,7 +136,7 @@ function ProductDetails({ product }) {
               alt="increment"
               onClick={() => handleIncrement(product.id)}
               className="bg-[#DB4444] p-2 rounded-r-md cursor-pointer"
-            />
+            /> {/* Increment */}
           </div>
         ) : (
           <button

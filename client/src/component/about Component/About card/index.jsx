@@ -2,6 +2,7 @@
 import PropTypes from "prop-types";
 
 function AboutCard({
+  // Props
   figure,
   detail,
   color1 = "#C1C0C1",
@@ -14,6 +15,7 @@ function AboutCard({
   mBottom = true,
   width = "18%",
 }) {
+  
   return (
     <div
       style={{ backgroundColor: bgColor, width: width }}

@@ -21,7 +21,7 @@ function NavBar() {
   const [dropDown, setDropDown] = useState(false);
   const [searchVal,setSearchVal] = useState("");
 
-  // handle Search button
+  // Search button
   const handleSeachButton = () =>{
     setSearch(searchVal);
     handleSearch();

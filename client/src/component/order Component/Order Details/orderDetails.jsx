@@ -8,17 +8,19 @@ import PropTypes from "prop-types";
 // SVGs
 import cross from "../../../assets/Ordered placed/x.svg";
 import OrderSummeryCard from "../order Summery/orderSummery";
+import OrderProfileDetails from "../order Profile/orderProfileDetails";
 
 function OrderDetails({ order, handleCloseOrder, index }) {
-  const { profileData } = useContext(Context);
+  const { profileData, totalPrice } = useContext(Context);
+
+  // Calculate Total Price
+  const total = totalPrice(order.products);
 
   // Close Button
   const CloseButton = () => {
     console.log("Clicked");
     handleCloseOrder(index);
   };
-
-  
 
   return (
     <>
@@ -50,7 +52,11 @@ function OrderDetails({ order, handleCloseOrder, index }) {
                 <div className="flex items-center">
                   {/* Product img */}
                   <div className="bg-white rounded-md mr-2">
-                    <img src={product.images[0]} alt="" className="object-contain w-16 h-16" />
+                    <img
+                      src={product.images[0]}
+                      alt=""
+                      className="object-contain w-16 h-16"
+                    />
                   </div>
                   {/* Product Name */}
                   <p className="font-medium">{product.title}</p>
@@ -72,7 +78,19 @@ function OrderDetails({ order, handleCloseOrder, index }) {
         </div>
 
         {/* Order Summery */}
-        <OrderSummeryCard order={order}/>
+        <div className="my-5 w-48 relative left-[75%]">
+          <OrderSummeryCard label={"Subtotal"} value={`$${total.toFixed(2)}`} />
+          <OrderSummeryCard
+            label={"Shipping"}
+            value="Free"
+            extra="border-b-2 border-b-[#999999] py-2"
+          />
+          <OrderSummeryCard
+            label={"Total"}
+            value={`$${total.toFixed(2)}`}
+            extra="my-2"
+          />
+        </div>
 
         {/* Customer Details */}
         <div className="mt-10">
@@ -80,50 +98,28 @@ function OrderDetails({ order, handleCloseOrder, index }) {
         </div>
         <div className="flex justify-between w-[80%] my-5">
           <div>
-            <div className="flex font-medium justify-between w-64 my-2">
-              <p className="">Name</p>
-              <p className="text-[#808080] text-start w-28">
-                {profileData?.name}
-              </p>
-            </div>
-            <div className="flex font-medium justify-between w-64 my-2">
-              <p>Email</p>
-              <p className="text-[#808080] text-start w-28">
-                {profileData?.email}
-              </p>
-            </div>
-            <div className="flex font-medium justify-between w-64 my-2">
-              <p>Mobile</p>
-              <p className="text-[#808080] text-start w-28">
-                {profileData?.phone}
-              </p>
-            </div>
-            <div className="flex font-medium justify-between w-64 my-2">
-              <p>State</p>
-              <p className="text-[#808080] text-start w-28">
-                {profileData?.address?.state}
-              </p>
-            </div>
+            <OrderProfileDetails label="Name" value={profileData?.name} />
+            <OrderProfileDetails label="Email" value={profileData?.email} />
+            <OrderProfileDetails label="Mobile" value={profileData?.phone} />
+            <OrderProfileDetails
+              label="State"
+              value={profileData?.address?.state}
+            />
           </div>
           <div>
-            <div className="flex font-medium justify-between w-64 my-2">
-              <p>City</p>
-              <p className="text-[#808080] text-start w-28">
-                {profileData?.address?.city}
-              </p>
-            </div>
-            <div className="flex font-medium justify-between w-64 my-2">
-              <p>Address</p>
-              <p className="text-[#808080] text-start w-40 relative left-12">
-                {profileData?.address?.street}
-              </p>
-            </div>
-            <div className="flex font-medium justify-between w-64 my-2">
-              <p>Pin Code</p>
-              <p className="text-[#808080] text-start w-28">
-                {profileData?.address?.zip}
-              </p>
-            </div>
+            <OrderProfileDetails
+              label="City"
+              value={profileData?.address?.city}
+            />
+            <OrderProfileDetails
+              label="Address"
+              value={profileData?.address?.street}
+              extra="w-40 relative left-12"
+            />
+            <OrderProfileDetails
+              label="Pin Code"
+              value={profileData?.address?.zip}
+            />
             <div className="flex font-medium justify-between items-center h-6 w-52 my-2">
               <p>Status</p>
               <p

@@ -25,8 +25,6 @@ const CountdownTimer = ({ targetDate }) => {
   // State to hold time left
   const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft());
 
-
-
   // update the countdown timer
   useEffect(() => {
     const timer = setInterval(() => {
