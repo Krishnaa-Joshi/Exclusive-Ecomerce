@@ -10,7 +10,7 @@ import Coupon from "@/component/Coupon/coupon";
 import Button from "@/component/Button/Button";
 
 function DisplayCart() {
-  const { editCart, setEditCart } = useContext(Context);
+  const { editCart, setEditCart,cartProducts } = useContext(Context);
   const navigate = useNavigate();
 
   const handleUpdateCart = () => {
@@ -70,7 +70,7 @@ function DisplayCart() {
       {/* Summery card */}
       <div className="border-2 border-black rounded-sm w-[30vw] p-4 relative left-[63vw] bottom-14">
         <p className="font-semibold text-2xl ">Cart Total</p>
-        <SummeryCard />
+        <SummeryCard products={cartProducts}/>
         {/* Checkout Button */}
         <div className="flex justify-center">
           <Button rounded="rounded-sm" padding="p-3" width="w-60" otherStyle="cursor-pointer" title="Procees To Checkout" handleFunc={() => navigate("/checkout")}/>

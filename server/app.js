@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
   
-// Google OAuth Logic 
+// Google OAuth Logic  
 passport.use(
   new GoogleStrategy(
     {

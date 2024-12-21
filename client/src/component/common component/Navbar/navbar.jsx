@@ -154,7 +154,7 @@ function NavBar() {
 
       {/* Dropdown of Account */}
       {dropDown && (
-        <div className="absolute top-[111px] right-32 w-[16%] h-[22%] rounded-lg backdrop-blur-md bg-[#99959A] shadow-lg">
+        <div className="absolute top-[111px] right-32 w-[16%] h-[22%] rounded-lg backdrop-blur-md bg-[#99959A] shadow-lg z-30">
           <ul>
             <li
               className="flex m-5 cursor-pointer"

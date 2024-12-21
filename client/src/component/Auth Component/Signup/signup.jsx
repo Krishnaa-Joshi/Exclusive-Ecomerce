@@ -87,6 +87,7 @@ function Signup() {
 
   
   return (
+
     <div className="w-[54vw] h-[90vh] my-28 flex flex-col justify-center items-center">
       <h1 className="text-5xl font-medium my-2.5">Create an Account</h1>
       <h3 className="font-medium w-1/2 my-2.5">Enter your details below</h3>

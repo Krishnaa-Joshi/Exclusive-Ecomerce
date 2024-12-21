@@ -5,6 +5,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { isAuthenticated } from "../context/Auth/auth.js";
 import { useNavigate } from "react-router-dom";
+import Session from "@/component/Auth Component/Session Expire/Session.jsx";
 
 export const Context = createContext(null);
 
@@ -17,6 +18,7 @@ function ContextProvider({ children }) {
   const [wishlistProducts, setWhishlistProducts] = useState([]); // wishlist product
   const [cartProducts, setCartProducts] = useState([]); // cart products
   const [categoryProducts, setCategoryProducts] = useState([]); // Category Products
+  const [orderedDetails,setOrderedDetails] = useState([]); //ordered Products
 
   // Handle Switch
   const [isLogin, setIsLogin] = useState(false); // signup and login component
@@ -24,6 +26,7 @@ function ContextProvider({ children }) {
   const [editing, setEditing] = useState(false); // account page component
   const [addAddress, setAddAddress] = useState(false); // address  component
   const [section, setSection] = useState("profile"); // section of Account Page
+  const [viewOrder,setViewOrder] = useState(false); // view Order
 
   // Handle Message state
   const [error, setError] = useState(""); // store Error
@@ -56,7 +59,8 @@ function ContextProvider({ children }) {
           console.log("Token expired. Removing it from local storage.");
           localStorage.removeItem("token");
           // Redirect to login page
-          navigate("/signUp");
+          <Session/>
+          window.location.reload();
         }
       } catch (error) {
         console.error("Error decoding token:", error);
@@ -146,6 +150,11 @@ function ContextProvider({ children }) {
       JSON.parse(localStorage.getItem("categoryProducts")) || [];
     console.log("loaded category From localStorage", storedCategory);
     setCategoryProducts(storedCategory);
+
+    // Load order Details
+    const storedOrderDetails = JSON.parse(localStorage.getItem("orderDetails")) || [];
+    console.log("Loaded orderDetails from localStorage",storedOrderDetails);
+    setOrderedDetails(storedOrderDetails);
   }, []);
 
   // Save wishlist to localStorage whenever it changes
@@ -153,6 +162,12 @@ function ContextProvider({ children }) {
     console.log("Saving wishlist to localStorage:", wishlistProducts);
     localStorage.setItem("wishlistProducts", JSON.stringify(wishlistProducts));
   }, [wishlistProducts]);
+
+  // Save order Details to localStorage whenever it changes
+  useEffect(() => {
+    console.log("Saving order Details to localStorage:", orderedDetails);
+    localStorage.setItem("orderDetails", JSON.stringify(orderedDetails));
+  }, [orderedDetails]);
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
@@ -234,6 +249,25 @@ function ContextProvider({ children }) {
     navigate("/category")
   };
 
+   // OrderNo Generator
+   const orderNoGenrator = () => {
+    const characters = "0123456789";
+    let result = "";
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+    }
+    return result;
+  };
+
+  // Calculate Total Price
+  const totalPrice = (products) => {
+    return products.reduce(
+      (sum, product) => sum + product.price * product.quantity,
+      0
+    );
+  };
+
   return (
     <Context.Provider
       value={{
@@ -273,6 +307,12 @@ function ContextProvider({ children }) {
         couponValid,
         setCouponValid,
         handleSearch,
+        orderedDetails,
+        setOrderedDetails,
+        viewOrder,
+        setViewOrder,
+        orderNoGenrator,
+        totalPrice
       }}
     >
       {children}
