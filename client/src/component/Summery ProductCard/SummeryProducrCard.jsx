@@ -13,7 +13,7 @@ function SummaryProductCard({ product }) {
       <div className="flex items-center justify-between w-11/12 border-b-2 py-2">
         <div className="flex items-center">
           <div className="">
-            <img src={product.images[0]} alt="" className="w-28" />
+            <img src={product.images[0]} alt="" className="w-20" />
           </div>
           <div>
             <p>{product.title}</p>

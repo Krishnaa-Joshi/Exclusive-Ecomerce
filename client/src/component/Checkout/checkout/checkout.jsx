@@ -20,14 +20,23 @@ import Button from "@/component/Button/Button";
 function Checkout() {
   const {
     cartProducts,
+    setCartProducts,
     error,
     setError,
     setErrorType,
     profileData,
     setSection,
+    setOrderedDetails,
+    orderNoGenrator,
   } = useContext(Context);
   const [check, setCheck] = useState("COD");
   const navigate = useNavigate();
+
+  // Calculate Total Price
+  const totalPrice = cartProducts.reduce(
+    (sum, product) => sum + product.price * product.quantity,
+    0
+  );
 
   // Switch payment Mode
   const payementMode = (Mode) => {
@@ -47,7 +56,32 @@ function Checkout() {
       setError("Address is Missing");
       setSection("Address");
       navigate("/account");
-    } else navigate("/orderPlaced");
+    } else {
+      // Get current date
+      const currentDate = new Date();
+      const orderedDate = currentDate.toLocaleDateString();
+
+      // Calculate delivery date (2 days later)
+      const deliveryDateObj = new Date(currentDate);
+      deliveryDateObj.setDate(currentDate.getDate() + 2);
+      const deliveryDate = deliveryDateObj.toLocaleDateString();
+
+      // Create the new order object
+      const newOrder = {
+        orderNo: orderNoGenrator(),
+        totalPrice: totalPrice.toFixed(2),
+        products: cartProducts,
+        date: orderedDate,
+        status: "IT'S ORDERED!",
+        deliveryDate,
+        viewOrder: false,
+      };
+
+      // Update the orderedDetails state
+      setOrderedDetails((prevDetails) => [...prevDetails, newOrder]);
+      setCartProducts([]);
+      navigate("/orderPlaced");
+    }
   };
 
   return (
@@ -68,7 +102,7 @@ function Checkout() {
       </div>
 
       {/* Summery */}
-      <SummeryCard />
+      <SummeryCard products={cartProducts} />
 
       {/* Payment Mode */}
       <div>
@@ -108,7 +142,14 @@ function Checkout() {
         <Coupon />
 
         {/* Place Order */}
-        <Button rounded="rounded-sm" padding="p-3" width="w-44" otherStyle="Order my-3" title="Place Order" handleFunc={handlePlaceOrder}/>
+        <Button
+          rounded="rounded-sm"
+          padding="p-3"
+          width="w-44"
+          otherStyle="Order my-3"
+          title="Place Order"
+          handleFunc={handlePlaceOrder}
+        />
       </div>
     </div>
   );

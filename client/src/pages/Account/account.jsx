@@ -6,7 +6,7 @@ import Path from "@/component/common component/pages path/path";
 
 // Hooks
 import { Context } from "@/context";
-import { useContext } from "react";
+import { Children, useContext } from "react";
 
 // Account Components
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ import UserDetails from "@/component/Account/user/user Details/userDetails";
 import EditUserDetails from "@/component/Account/user/edit user Details/EditUserDetails";
 import EmptyState from "@/component/Account/Empty State/emptyState";
 import Message from "@/component/Message/message";
+import OrderCard from "@/component/order Component/Order Card/orderCard";
 
 // SVGs
 import EmptyOrder from "../../assets/Account assets/Order/emptyOrder.svg";
@@ -28,23 +29,57 @@ function UserAccoutPage() {
     section,
     setSection,
     wishlistProducts,
+    orderedDetails,
+    setOrderedDetails,
     error,
   } = useContext(Context);
 
+  console.log(orderedDetails);
   const quantity = wishlistProducts.length;
   const navigate = useNavigate();
 
-  // handle switch between different section of account Page
+  // Handle switch between different sections of the account page
   const handleSection = (section) => {
     setSection(section);
   };
 
-  // check if Address object of ProfileData is empty or Not
+  // Check if the Address object of ProfileData is empty or not
   function isAddressEmpty() {
     return Object.values(profileData.address).every(
       (value) => !value || value.trim() === ""
     );
   }
+
+  // Redirect to Wishlist if it has items
+  if (section === "wishList" && quantity > 0) {
+    navigate("/wishlist");
+  }
+
+  // handle Cancel Order Button
+  const handleCancel = (index) => {
+    setOrderedDetails((prevDetails) =>
+      prevDetails.map((order, i) =>
+        i === index ? { ...order, status: "ORDER UNSUCCESSFUL" } : order
+      )
+    );
+  };
+
+  const handleViewOrder = (index) => {
+    setOrderedDetails((prevDetails) =>
+      prevDetails.map((order, i) =>
+        i === index ? { ...order, viewOrder: true } : order
+      )
+    );
+  };
+
+  const handleCloseOrder = (index) => {
+
+    setOrderedDetails((prevDetails) =>
+      prevDetails.map((order, i) =>
+        i === index ? { ...order, viewOrder: false } : order
+      )
+    );
+  };
 
   return (
     <>
@@ -59,9 +94,7 @@ function UserAccoutPage() {
       </div>
 
       {/* Error or Success Message */}
-      {error ? (
-        <Message/>
-      ) : null}
+      {error ? <Message /> : null}
 
       <div
         className={`flex w-[84vw] ${
@@ -69,7 +102,7 @@ function UserAccoutPage() {
         } justify-between`}
       >
         <div className="flex flex-col w-[22vw] h-[50vh] items-center mt-16">
-          {/* User Details  */}
+          {/* User Details */}
           <div>
             <h1 className="font-semibold mb-3">Manage My Account</h1>
             <p
@@ -115,11 +148,10 @@ function UserAccoutPage() {
               My WishList
             </p>
           </div>
-
         </div>
-        
+
         {/* Profile Section */}
-        {section == "profile" ? (
+        {section === "profile" ? (
           !editing ? (
             <UserDetails />
           ) : (
@@ -128,27 +160,56 @@ function UserAccoutPage() {
         ) : null}
 
         {/* Order Section */}
-        {section == "order" ? (
-          <EmptyState
-            img={EmptyOrder}
-            heading={"You haven't ordered anything yet."}
-            subLine={"Long time you have't buy anything"}
+        {section === "order" ? (
+          orderedDetails?.length === 0 ? (
+            <EmptyState
+              img={EmptyOrder}
+              heading={"You haven't ordered anything yet."}
+              subLine={"Long time you haven't bought anything"}
+            />
+          ) : (
+            <div
+  className="flex flex-col items-center w-[61vw] overflow-y-auto max-h-screen relative bottom-14"
+  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+>
+  {Children.toArray(
+    orderedDetails.every((order) => !order.viewOrder)
+      ? // Render all orders if all viewOrder values are false
+        orderedDetails.map((order, index) => (
+          <OrderCard
+            order={order}
+            index={index}
+            handleCancel={handleCancel}
+            handleViewOrder={handleViewOrder}
+            handleCloseOrder={handleCloseOrder}
           />
+        ))
+      : // Render only orders with viewOrder set to true
+        orderedDetails
+          .map((order, index) => ({ ...order, originalIndex: index })) // Attach original index
+          .filter((order) => order.viewOrder)
+          .map((order) => (
+            <OrderCard
+              order={order}
+              index={order.originalIndex} // Use original index
+              handleCancel={handleCancel}
+              handleViewOrder={handleViewOrder}
+              handleCloseOrder={handleCloseOrder}
+            />
+          ))
+  )}
+</div>
+
+          )
         ) : null}
 
-        {/* WishList section */}
-        {section == "wishList" ? (
-          <>
-            {quantity > 0 ? (
-              navigate("/wishlist")
-            ) : (
-              <EmptyState
-                img={EmptywishlistImg}
-                heading={"Your wishList is empty!"}
-                subLine={"Explore more and shortList some items"}
-              />
-            )}
-          </>
+        {/* WishList Section */}
+        {section === "wishList" && quantity === 0 ? (
+          <EmptyState
+            img={EmptywishlistImg}
+            heading={"Your wishlist is empty!"}
+            subLine={"Explore more and shortlist some items"}
+          />
         ) : null}
 
         {/* Address Section */}
@@ -166,7 +227,6 @@ function UserAccoutPage() {
             <UserDetails />
           )
         ) : null}
-
       </div>
       <Footer />
     </>

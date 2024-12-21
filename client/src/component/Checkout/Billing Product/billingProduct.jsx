@@ -6,7 +6,7 @@ function BillingProduct({ product }) {
     <div>
         <div className="flex justify-between items-center my-2 w-[380px]">
           <div className="flex items-center">
-            <img src={product.images[0]} alt="" className="h-14 w-14 mr-2"/>
+            <img src={product.images[0]} alt="" className="h-14 w-14 mr-2 object-contain"/>
             <p className="text-sm w-48">{product.title}</p>
           </div>
           <p>{`$${product.price}`}</p>
