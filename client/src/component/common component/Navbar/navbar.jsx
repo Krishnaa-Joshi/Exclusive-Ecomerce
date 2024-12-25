@@ -1,6 +1,6 @@
 // Hooks
 import { Context } from "@/context";
-import { useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // SVGs
@@ -16,16 +16,23 @@ import wishlist from "../../../assets/Navbar assets/wishlist.svg";
 function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentPage, setCurrentPage, setIsLogin, setSection, isAuth, handleSearch, setSearch} =
-    useContext(Context);
+  const {
+    currentPage,
+    setCurrentPage,
+    setIsLogin,
+    setSection,
+    isAuth,
+    handleSearch,
+    setSearch,
+  } = useContext(Context);
   const [dropDown, setDropDown] = useState(false);
-  const [searchVal,setSearchVal] = useState("");
+  const [searchVal, setSearchVal] = useState("");
 
   // Search button
-  const handleSeachButton = () =>{
+  const handleSeachButton = () => {
     setSearch(searchVal);
     handleSearch();
-  }
+  };
 
   // handle page location
   useEffect(() => {
@@ -42,24 +49,40 @@ function NavBar() {
     setCurrentPage(page);
     navigate(`/${page}`);
   };
-
-  // handle DropDown
-  const handleDropDown = () => {
-    setDropDown((prev) => !prev); 
-  };
-
+  
   // handle Logout
-  const handleLogOut = ()=>{
+  const handleLogOut = () => {
     localStorage.removeItem("token");
     navigate("/signUp");
-  }
+  };
+
+  // Close dropdown on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (dropDown) {
+        setDropDown(false); // Close the dropdown when the user scrolls
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [dropDown]);
 
   return (
-    <div className="flex justify-between items-center h-20 border-b-[1px] border-b-[#D9DbE9]">
+    <div className="flex justify-between items-center h-[70px] border-b-[1px] border-b-[#D9DbE9]">
       <div className="flex w-2/3">
         {/* logo */}
         <div className="w-2/5 flex justify-center">
-          <h3 className="font-bold text-2xl cursor-pointer" onClick={()=>navigate("/")}>Exclusive</h3>
+          <h3
+            className="font-bold text-2xl cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            Exclusive
+          </h3>
         </div>
 
         {/* Pages */}
@@ -107,7 +130,7 @@ function NavBar() {
         </ul>
       </div>
 
-      <div className="flex w-1/3">
+      <div className="flex w-1/3 justify-center items-center">
         {/* search bar */}
         <div className={`flex w-1/2 bg-[#EFF0F6] p-3 rounded-lg`}>
           <input
@@ -132,7 +155,7 @@ function NavBar() {
           onClick={() => handleClick("wishlist", "wishList")}
           className="ml-4 mr-2 cursor-pointer"
         />
-        
+
         {/* cart */}
         <img
           src={cart}
@@ -140,48 +163,45 @@ function NavBar() {
           onClick={() => handleClick("cart")}
           className="mx-2 cursor-pointer"
         />
-        
+
         {/* Account */}
         {isAuth && (
-          <img
-            src={dropDown ? AccountSelected : blackAccount}
-            alt="account"
-            onClick={handleDropDown}
-            className={`cursor-pointer mx-2 ${dropDown ? "w-[7%]" : "w-[5%]"}`}
-          />
+          <div className="relative inline-block group">
+            <button className="mt-1">
+              <img
+                src={blackAccount}
+                alt="account"
+                className="cursor-pointer mx-2 group-hover:hidden w-7"
+              />
+              <img src={AccountSelected} alt="account" className="cursor-pointer mx-2 hidden group-hover:block w-7" />
+            </button>
+
+            {/* Hoverable Dropdown */}
+            <div className="absolute right-2 w-64 h-36 rounded-lg backdrop-blur-md bg-[#99959A] shadow-lg z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 group-hover:block hidden">
+              <div>
+                <div
+                  className="flex m-5 cursor-pointer"
+                  onClick={() => handleClick("account", "profile")}
+                >
+                  <img src={Account} alt="Account" />
+                  <p className="mx-4 text-white">Manage My Account</p>
+                </div>
+                <div
+                  className="flex m-5 cursor-pointer"
+                  onClick={() => handleClick("account", "order")}
+                >
+                  <img src={order} alt="Order" />
+                  <p className="mx-4 text-white">My Order</p>
+                </div>
+                <div className="flex m-5" onClick={() => handleLogOut()}>
+                  <img src={logout} alt="Logout" />
+                  <p className="mx-4 text-white cursor-pointer">Logout</p>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </div>
-
-      {/* Dropdown of Account */}
-      {dropDown && (
-        <div className="absolute top-[111px] right-32 w-[16%] h-[22%] rounded-lg backdrop-blur-md bg-[#99959A] shadow-lg z-30">
-          <ul>
-            <li
-              className="flex m-5 cursor-pointer"
-              onClick={() => handleClick("account", "profile")}
-            >
-              <img src={Account} alt="Account" />
-              <p className="mx-4 text-white">Manage My Account</p>
-            </li>
-            <li
-              className="flex m-5 cursor-pointer"
-              onClick={() => handleClick("account", "order")}
-            >
-              <img src={order} alt="Order" />
-              <p className="mx-4 text-white">My Order</p>
-            </li>
-            <li
-              className="flex m-5"
-              onClick={() => {
-                handleLogOut()
-              }}
-            >
-              <img src={logout} alt="Logout" />
-              <p className="mx-4 text-white cursor-pointer">Logout</p>
-            </li>
-          </ul>
-        </div>
-      )}
     </div>
   );
 }

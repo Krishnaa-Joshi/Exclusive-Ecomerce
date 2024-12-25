@@ -11,12 +11,22 @@
   font-style: normal;
 }
 
-
-*{
+/* Universal Reset */
+* {
   margin: 0;
   padding: 0;
 }
 
+/* Hide scrollbar globally */
+html, body {
+  overflow: auto; /* Enable scrolling */
+  height: 100%; /* Ensure the body occupies the full viewport */
+   /* Hide scrollbar in Firefox */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in WebKit-based browsers (Chrome, Safari, Edge) */
+}
 
 .radio-custom {
   @apply appearance-none h-5 w-5 bg-[#B3B3B3] rounded-full ;
