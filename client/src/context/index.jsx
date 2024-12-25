@@ -57,7 +57,7 @@ function ContextProvider({ children }) {
           console.log("Token expired. Removing it from local storage.");
           localStorage.removeItem("token");
           // Redirect to login page
-          <Session/>
+          navigate("/signUp");
           window.location.reload();
         }
       } catch (error) {
