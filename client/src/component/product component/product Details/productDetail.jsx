@@ -82,12 +82,12 @@ function ProductDetails({ product }) {
   };
 
   return (
-    <div className="h-screen mr-16">
+    <div className="mx-3 my-10 sm:my-0 sm:mx-9 lg:h-screen lg:mr-10 lg:flex lg:flex-col lg:justify-center xl:mr-16 2xl:mr-32">
       {/* title */}
-      <h1 className="text-2xl font-semibold my-2">{product.title}</h1>
+      <h1 className="font-semibold text-xl sm:text-2xl md:my-2">{product.title}</h1>
       {/* Rating */}
-      <div className="flex items-center my-2">
-        <div className=" flex">
+      <div className="flex items-center sm:my-2">
+        <div className="flex">
           {(() => {
             const stars = [];
             for (let i = 0; i < 5; i++) {
@@ -104,15 +104,15 @@ function ProductDetails({ product }) {
           {`( ${product.rating.toFixed(1)} Reviews )`}
         </span>
         {/* In Stock or Not */}
-        <p className="mx-2.5"> | </p>
+        <p className="mx-1 sm:mx-2.5"> | </p>
         <p className={product.stock !== 0 ? "text-green-500" : "text-red-500"}>
           {product.stock !== 0 ? "In Stock" : "Out of Stock"}
         </p>
       </div>
       {/* Price */}
-      <div className="text-2xl font-medium mb-5">{`$${product.price}`}</div>
+      <div className="font-medium text-lg mb-2 sm:text-2xl sm:mb-5">{`$${product.price}`}</div>
       {/* Description */}
-      <div className="w-[25vw] pb-5 border-b-2 border-b-[#999999]">
+      <div className="border-b-2 border-b-[#999999] pb-3 sm:pb-5 lg:w-[30vw] xl:w-[25vw]">
         {product.description}
       </div>
       {/* Add to Cart Button */}
@@ -140,22 +140,22 @@ function ProductDetails({ product }) {
           </div>
         ) : (
           <button
-            className="flex justify-center items-center w-40 rounded-md bg-[#DB4444] text-white p-2.5 text-sm font-bold"
+            className="bg-[#DB4444] text-white font-bold flex justify-center items-center rounded-sm text-xs w-32 p-2 sm:w-40 sm:rounded-md  sm:p-2.5 sm:text-sm"
             onClick={() => handleAddToCart(product)}
           >
             <div>
-              <img src={cart} className="mr-2" alt="" />
+              <img src={cart} className="mr-1 sm:mr-2" alt="" />
             </div>
             Add To Cart
           </button>
         )}
         {/* Buy Now Button */}
         <div>
-          <Button padding="p-2.5" rounded="rounded-sm" width="w-40" handleFunc={handleBuyNow} title="Buy Now" otherStyle="m-3 cursor-pointer"/>
+          <Button padding="p-2 sm:p-2.5" rounded="rounded-sm" width="w-32 sm:w-40" handleFunc={handleBuyNow} title="Buy Now" otherStyle="m-1 cursor-pointer sm:m-3"/>
         </div>
         {/* Wishlist */}
         <div
-          className="my-3 border-2 border-[#999999] p-2 rounded-md cursor-pointer"
+          className="border-2 border-[#999999] cursor-pointer rounded-sm my-1 p-1.5 sm:my-3 sm:rounded-md"
           onClick={() => handleAddToWishlist(product)}
         >
           <img
@@ -170,7 +170,7 @@ function ProductDetails({ product }) {
       </div>
 
       {/* Free Delivery and Return Policy */}
-      <div className="border-2 border-[#999999] rounded-md w-96 my-7">
+      <div className="border-2 border-[#999999] rounded-sm my-3 w-72 sm:rounded-md sm:w-96 sm:my-7">
         <DeliveryService img={Delivery} heading={"Free Delivery"} description={"Enter your postal code for Delivery Availability"}/>
         <div className="border-b-2 border-b-[#999999]"></div>
         <DeliveryService img={returnDelivery} heading={"Return Delivery"} description={"Free 30 Days Delivery Returns. Details"}/>

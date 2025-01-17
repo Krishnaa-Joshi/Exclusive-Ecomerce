@@ -1,5 +1,5 @@
 // library and hook
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types"; // Import prop-types for validation
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -17,7 +17,7 @@ function ContextProvider({ children }) {
   const [wishlistProducts, setWhishlistProducts] = useState([]); // wishlist product
   const [cartProducts, setCartProducts] = useState([]); // cart products
   const [categoryProducts, setCategoryProducts] = useState([]); // Category Products
-  const [orderedDetails,setOrderedDetails] = useState([]); //ordered Products
+  const [orderedDetails, setOrderedDetails] = useState([]); //ordered Products
 
   // Handle Switch
   const [isLogin, setIsLogin] = useState(false); // signup and login component
@@ -25,6 +25,7 @@ function ContextProvider({ children }) {
   const [editing, setEditing] = useState(false); // account page component
   const [addAddress, setAddAddress] = useState(false); // address  component
   const [section, setSection] = useState("profile"); // section of Account Page
+  const [hamburger, sethamburger] = useState(false); // hamburger component
 
   // Handle Message state
   const [error, setError] = useState(""); // store Error
@@ -37,6 +38,32 @@ function ContextProvider({ children }) {
   const [search, setSearch] = useState(() => {
     return localStorage.getItem("search") || "";
   }); // search result
+  const [sliceCount, setSliceCount] = useState([5, 10]); //manage sliceCount
+
+  // Memoize randomized products
+  useEffect(() => {
+    const updateSliceCount = () => {
+      if (window.innerWidth < 768) {
+        setSliceCount([6, 12]); // Below sm
+      } else if (window.innerWidth < 1024) {
+        setSliceCount([8, 12]); // sm
+      } else if (window.innerWidth < 1280) {
+        setSliceCount([4, 12]); // sm
+      } else {
+        setSliceCount([5, 10]); // md and above
+      }
+    };
+    updateSliceCount(); // Set initial value
+    window.addEventListener("resize", updateSliceCount);
+
+    return () => window.removeEventListener("resize", updateSliceCount);
+  }, []);
+
+  const shuffledProducts = useMemo(() => {
+    return [...products]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, sliceCount[0]);
+  }, [products, sliceCount]);
 
   // Check authentication status on app load
   useEffect(() => {
@@ -150,8 +177,9 @@ function ContextProvider({ children }) {
     setCategoryProducts(storedCategory);
 
     // Load order Details
-    const storedOrderDetails = JSON.parse(localStorage.getItem("orderDetails")) || [];
-    console.log("Loaded orderDetails from localStorage",storedOrderDetails);
+    const storedOrderDetails =
+      JSON.parse(localStorage.getItem("orderDetails")) || [];
+    console.log("Loaded orderDetails from localStorage", storedOrderDetails);
     setOrderedDetails(storedOrderDetails);
   }, []);
 
@@ -244,11 +272,11 @@ function ContextProvider({ children }) {
       setError("Something went wrong. Please try again later.");
     }
 
-    navigate("/category")
+    navigate("/category");
   };
 
-   // OrderNo Generator
-   const orderNoGenrator = () => {
+  // OrderNo Generator
+  const orderNoGenrator = () => {
     const characters = "0123456789";
     let result = "";
     for (let i = 0; i < 6; i++) {
@@ -264,6 +292,51 @@ function ContextProvider({ children }) {
       (sum, product) => sum + product.price * product.quantity,
       0
     );
+  };
+
+  // Calculate Total Price
+  const total = totalPrice(cartProducts);
+
+  // check if Address object of ProfileData is empty or Not
+  function isAddressEmpty() {
+    return Object.values(profileData.address).every(
+      (value) => !value || value.trim() === ""
+    );
+  }
+
+  // Handle place Order
+  const handlePlaceOrder = () => {
+    if (isAddressEmpty()) {
+      setErrorType(false);
+      setError("Address is Missing");
+      setSection("Address");
+      navigate("/account");
+    } else {
+      // Get current date
+      const currentDate = new Date();
+      const orderedDate = currentDate.toLocaleDateString();
+
+      // Calculate delivery date (2 days later)
+      const deliveryDateObj = new Date(currentDate);
+      deliveryDateObj.setDate(currentDate.getDate() + 2);
+      const deliveryDate = deliveryDateObj.toLocaleDateString();
+
+      // Create the new order object
+      const newOrder = {
+        orderNo: orderNoGenrator(),
+        totalPrice: total.toFixed(2),
+        products: cartProducts,
+        date: orderedDate,
+        status: "IT'S ORDERED!",
+        deliveryDate,
+        viewOrder: false,
+      };
+
+      // Update the orderedDetails state
+      setOrderedDetails((prevDetails) => [...prevDetails, newOrder]);
+      setCartProducts([]);
+      navigate("/orderPlaced");
+    }
   };
 
   return (
@@ -308,7 +381,12 @@ function ContextProvider({ children }) {
         orderedDetails,
         setOrderedDetails,
         orderNoGenrator,
-        totalPrice
+        totalPrice,
+        hamburger,
+        sethamburger,
+        shuffledProducts,
+        sliceCount,
+        handlePlaceOrder,
       }}
     >
       {children}

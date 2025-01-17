@@ -90,8 +90,7 @@ function EditUserDetails() {
       // Error Message
       if (section === "profile")
         setError("Failed to update profile. Please try again.");
-      else  
-        setError("Failed to update Address. Please try again.");
+      else setError("Failed to update Address. Please try again.");
 
       console.error("Error updating profile: ", error);
     }
@@ -103,14 +102,13 @@ function EditUserDetails() {
 
   return (
     <>
-      <div className="mt-24 w-[45vw]">
+      <div className="mt-8 mx-3 sm:w-[95vw] md:mx-0 md:mt-24 md:w-[540px] lg:w-[665px]">
         {/* Heading */}
         <h1 className="text-[#DB4444] font-semibold text-xl my-4">
           {section === "profile" ? "Edit your Profile" : "Enter Your Address"}
         </h1>
-        <form action="post">
-          <div className="flex justify-between ">
-
+        <form action="post" className="sm:w-[600px] md:w-auto">
+          <div className="text-sm sm:text-base sm:flex sm:justify-between ">
             {/*First Name or Country */}
             <div className="flex flex-col ">
               <label htmlFor={section === "profile" ? "First Name" : "Country"}>
@@ -123,7 +121,7 @@ function EditUserDetails() {
                   section === "profile" ? formData.firstName : address.country
                 }
                 onChange={handleChange}
-                className="bg-[#F5F5F5] p-2.5 rounded-md w-80 focus:outline-none my-2.5"
+                className="bg-[#F5F5F5] p-2.5 focus:outline-none my-2.5 rounded-md sm:w-72 md:w-64 lg:w-80"
                 placeholder={section === "profile" ? "First Name" : "Country"}
                 {...(section === "profile" ? "" : { required: true })}
               />
@@ -141,14 +139,13 @@ function EditUserDetails() {
                   section === "profile" ? formData.lastName : address.state
                 }
                 onChange={handleChange}
-                className="bg-[#F5F5F5] p-2.5 rounded-md w-80 focus:outline-none my-2.5"
+                className="bg-[#F5F5F5] p-2.5 rounded-md focus:outline-none my-2.5 sm:w-72 md:w-64 lg:w-80"
                 placeholder={section === "profile" ? "Last Name" : "State"}
                 {...(section === "profile" ? "" : { required: true })}
               />
             </div>
           </div>
-          <div className="flex justify-between">
-
+          <div className="sm:flex sm:justify-between">
             {/*Email or City */}
             <div className="flex flex-col">
               <label htmlFor={section === "profile" ? "Email" : "City"}>
@@ -159,7 +156,7 @@ function EditUserDetails() {
                 name={section === "profile" ? "email" : "city"}
                 value={section === "profile" ? formData.email : address.city}
                 onChange={handleChange}
-                className="bg-[#F5F5F5] p-2.5 rounded-md w-80 focus:outline-none my-2.5"
+                className="bg-[#F5F5F5] p-2.5 rounded-md focus:outline-none my-2.5 sm:w-72 md:w-64 lg:w-80"
                 placeholder={section === "profile" ? "Email" : "City"}
                 {...(section === "profile"
                   ? { readOnly: true }
@@ -177,7 +174,7 @@ function EditUserDetails() {
                 name={section === "profile" ? "phone" : "zip"}
                 value={section === "profile" ? formData.phone : address.zip}
                 onChange={handleChange}
-                className="bg-[#F5F5F5] p-2.5 rounded-md w-80 focus:outline-none my-2.5"
+                className="bg-[#F5F5F5] p-2.5 rounded-md focus:outline-none my-2.5 sm:w-72 md:w-64 lg:w-80"
                 placeholder={section === "profile" ? "Phone No." : "Pin code"}
                 {...(section === "profile" ? "" : { required: true })}
               />
@@ -194,7 +191,7 @@ function EditUserDetails() {
               name={section === "profile" ? "password" : "street"}
               value={section === "profile" ? formData.password : address.street}
               onChange={handleChange}
-              className="bg-[#F5F5F5] p-2.5 rounded-md w-full focus:outline-none my-2.5"
+              className="bg-[#F5F5F5] p-2.5 rounded-md focus:outline-none my-2.5 sm:w-full"
               placeholder={
                 section === "profile" ? "Current password" : "Street Address"
               }
@@ -209,7 +206,7 @@ function EditUserDetails() {
                   placeholder="New Password"
                   value={formData.newPassword}
                   onChange={handleChange}
-                  className="bg-[#F5F5F5] p-2.5 rounded-md w-full focus:outline-none my-2.5"
+                  className="bg-[#F5F5F5] p-2.5 rounded-md focus:outline-none my-2.5 sm:w-full"
                 />
                 {/* Confirm Password */}
                 <input
@@ -218,13 +215,12 @@ function EditUserDetails() {
                   placeholder="Confirm New Password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="bg-[#F5F5F5] p-2.5 rounded-md w-full focus:outline-none my-2.5"
+                  className="bg-[#F5F5F5] p-2.5 rounded-md focus:outline-none my-2.5 sm:w-full"
                 />
               </>
             ) : null}
           </div>
-          <div className={"flex justify-end "}>
-
+          <div className={"flex sm:justify-end "}>
             {/* Cancel Button */}
             <input
               type="button"
@@ -232,12 +228,12 @@ function EditUserDetails() {
               value="Cancel"
               onClick={handleCancle}
             />
-            
+
             {/* Submit Button */}
             <input
               type="submit"
               value="Save Changes"
-              className="bg-[#db4444] text-white text-md w-52 p-4 rounded-md ml-8 my-5 cursor-pointer"
+              className="bg-[#db4444] text-white text-md w-32 p-2.5 rounded-md ml-8 my-5 cursor-pointer sm:w-40 sm:p-3 md:w-52 md:p-4"
               onClick={handleSubmit}
             />
           </div>

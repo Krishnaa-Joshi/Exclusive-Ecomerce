@@ -1,4 +1,7 @@
+// Hooks
 import { Route, Routes } from "react-router-dom";
+
+// Component
 import HomePage from "./pages/Home/home";
 import AboutPage from "./pages/About/about";
 import ContactPage from "./pages/Contact/contact";
@@ -19,15 +22,15 @@ function App() {
     <>
       {/* Routes */}
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/login" element={<AuthPage isLogin={true} />} />
-        <Route path="/signUp" element={<AuthPage />} />
-        <Route path="/category" element={<CategoryPage />} />
-        <Route path="/product/:id" element={<ProductDetailsPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path="FAQs" element={<FAQPage/>} />
+        <Route path="/" element={<HomePage />} /> {/* Home */}
+        <Route path="/about" element={<AboutPage />} /> {/* About */}
+        <Route path="/contact" element={<ContactPage />} /> {/* Contact */}
+        <Route path="/login" element={<AuthPage isLogin={true} />} /> {/* Login */}
+        <Route path="/signUp" element={<AuthPage />} /> {/* SignUp */}
+        <Route path="/category" element={<CategoryPage />} /> {/* Category */}
+        <Route path="/product/:id" element={<ProductDetailsPage />} /> {/* Product Details */}
+        <Route path="*" element={<NotFoundPage />} /> {/* 404  */}
+        <Route path="FAQs" element={<FAQPage />} /> {/* FAQs */}
         <Route
           path="/cart"
           element={
@@ -35,7 +38,7 @@ function App() {
               <CartPage />
             </ProtectedRoute>
           }
-        />
+        /> {/* Cart */}
         <Route
           path="/wishlist"
           element={
@@ -43,7 +46,7 @@ function App() {
               <WishListPage />
             </ProtectedRoute>
           }
-        />
+        /> {/* Wishlist */}
         <Route
           path="/account"
           element={
@@ -51,7 +54,7 @@ function App() {
               <UserAccoutPage />
             </ProtectedRoute>
           }
-        />
+        /> {/* Account */}
         <Route
           path="/checkout"
           element={
@@ -59,7 +62,7 @@ function App() {
               <CheckOutPage />
             </ProtectedRoute>
           }
-        />
+        /> {/* Checkout */}
         <Route
           path="/orderPlaced"
           element={
@@ -67,7 +70,7 @@ function App() {
               <OrderPlaced />
             </ProtectedRoute>
           }
-        />
+        /> {/* order Placed */}
       </Routes>
     </>
   );

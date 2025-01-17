@@ -14,8 +14,8 @@ function NotFoundPage() {
     <>
       <HeroSection />
       <NavBar />
-      <div className=" flex justify-center h-screen">
-        <EmptyState img={Svg404} heading="Page Not Found" subLine="Your visited page not found. You may go to home page" button="Back to home page"/>
+      <div className=" flex justify-center items-center h-[50vh] md:h-screen xl:items-start">
+        <EmptyState img={Svg404} heading="Page Not Found" subLine="Your visited page not found." button="Go to home"/>
       </div>
       <Footer />
     </>

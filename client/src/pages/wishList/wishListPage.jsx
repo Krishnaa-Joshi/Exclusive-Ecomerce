@@ -11,14 +11,14 @@ import EmptyState from "@/component/Account/Empty State/emptyState";
 
 // Hooks
 import { Context } from "@/context";
-import { Children, useContext, useMemo } from "react";
+import { Children, useContext} from "react";
 
 // SVGs
 import EmptywishlistImg from "../../assets/Account assets/wishlist/emptyWishlist.svg"
 import { useNavigate } from "react-router-dom";
 
 function WishListPage() {
-  const { products, wishlistProducts, setWhishlistProducts, setCartProducts,setCategoryProducts,setSearch } = useContext(Context);
+  const { products, wishlistProducts, setWhishlistProducts, setCartProducts,setCategoryProducts,setSearch,shuffledProducts } = useContext(Context);
   const navigate = useNavigate();
   const quantity = wishlistProducts.length;
 
@@ -39,11 +39,6 @@ function WishListPage() {
     setWhishlistProducts([]);
   };
 
-  // suffled Products
-  const shuffledProducts = useMemo(() => {
-    return [...products].sort(() => Math.random() - 0.5).slice(0, 5);
-  }, [products]);
-
    // Handle View All products
    const handleViewAllProducts = () => {
     setCategoryProducts(products);
@@ -55,14 +50,13 @@ function WishListPage() {
     <>
       <HeroSection />
       <NavBar />
-      <div></div>
-      <div className="flex justify-between mx-24 items-center h-44">
+      <div className="flex justify-between items-center h-24 mx-3 sm:h-32 sm:mx-4 md:h-40 lg:h-44 xl:mx-7">
         {/* Display Quantity */}
-        <div className="font-medium text-lg">
+        <div className="font-medium text-sm ml-2 sm:text-base md:text-lg md:ml-3 lg:ml-7 xl:ml-8">
           <h1>Wishlist {`( ${quantity} )`}</h1>
         </div>
         {/* Move to bag */}
-        <button className="p-3 border-2 border-[#808080] rounded-md font-medium w-44" onClick={()=>handleMoveToBag()}>
+        <button className="border-2 border-[#808080] font-medium text-sm p-2 rounded-sm sm:w-36 md:rounded-md md:text-base md:w-40 xl:p-3 xl:w-44" onClick={()=>handleMoveToBag()}>
           Move All To Bag
         </button>
       </div>
@@ -78,15 +72,15 @@ function WishListPage() {
       )}
 
       {/* Just for you Section */}
-      <div className="flex justify-between mx-[70px] items-center h-44">
+      <div className="flex justify-between items-center h-24 mx-3 sm:h-32 sm:mx-4 md:h-40 lg:h-44  xl:mx-7">
         <SectionHeading heading={"Just For You"} />
         {/* Button */}
-        <button className="p-3 border-2 border-[#808080] rounded-md font-medium w-36" onClick={handleViewAllProducts}>
+        <button className="border-2 border-[#808080] font-medium items-center text-sm p-2 w-24 rounded-sm md:text-base md:rounded-md md:w-32 xl:w-36" onClick={handleViewAllProducts}>
           See All
         </button>
       </div>
       {/* Products */}
-      <div className="grid grid-cols-5 w-[90vw] mx-20 mb-44">
+      <div className="grid grid-cols-2 mx-4 mb-20 justify-items-center sm:grid-cols-3 md:grid-cols-4 lg:w-[95vw] lg:mx-8 xl:grid-cols-5 xl:mx-12 xl:mb-44 2xl:mx-8">
         {Children.toArray(
           shuffledProducts.map((product) => (
             <ProductCard product={product} url={"wishlist"} />

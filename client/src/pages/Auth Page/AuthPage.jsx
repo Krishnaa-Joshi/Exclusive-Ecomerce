@@ -14,6 +14,7 @@ import { useContext } from "react";
 // Image
 import img from "../../assets/Auth Assets/img.avif";
 
+
 function AuthPage() {
   const { isLogin } = useContext(Context);
 
@@ -21,9 +22,9 @@ function AuthPage() {
     <>
       <HeroSection />
       <NavBar />
-      <div className="flex">
-        <div className="h-screen w-54vw my-28">
-          <img src={img} alt="" className="w-[54vw] h-[90vh]" />
+      <div className="sm:flex">
+        <div className="flex justify-center mx-5 my-10 sm:mx-0 sm:block sm:h-screen sm:w-54vw sm:my-28 ">
+          <img src={img} alt="" className="rounded-sm w-[95vw] sm:w-[50vw] sm:h-[100vh] md:w-[54vw] md:h-[90vh] " />
         </div>
         {isLogin ? <Login /> : <Signup />}
       </div>

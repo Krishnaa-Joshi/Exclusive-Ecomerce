@@ -5,7 +5,7 @@ function Button({width,padding,rounded,handleFunc,title,otherStyle = ""}){
     return(
         <>
             <button
-            className={`bg-[#DB4444] p-2.5 text-white ${width} ${padding} ${rounded} ${otherStyle}`}
+            className={`bg-[#DB4444] p-2.5 text-white text-sm sm:text-base ${width} ${padding} ${rounded} ${otherStyle}`}
             {...(handleFunc && { onClick: handleFunc })}
           >
             {title}

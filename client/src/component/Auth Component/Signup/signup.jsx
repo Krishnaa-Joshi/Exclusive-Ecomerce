@@ -87,14 +87,14 @@ function Signup() {
 
   
   return (
-    <div className="w-[54vw] h-[90vh] my-28 flex flex-col justify-center items-center">
-      <h1 className="text-5xl font-medium my-2.5">Create an Account</h1>
-      <h3 className="font-medium w-1/2 my-2.5">Enter your details below</h3>
+    <div className="mb-20 flex flex-col justify-center items-center sm:mb-0 sm:w-[54vw] sm:h-screen sm:my-28 md:h-[90vh]">
+      <h1 className="text-3xl font-semibold sm:font-medium sm:my-2.5 sm:text-4xl sm:w-[47vw] md:w-[42vw] lg:w-[42vw] lg:text-5xl xl:text-start xl:w-[32vw] 2xl:w-auto">Create an Account</h1>
+      <h3 className="font-medium sm:my-2.5 sm:w-[44vw] md:w-[41vw] lg:w-[41vw] xl:w-[30vw] xl:text-start 2xl:w-1/2">Enter your details below</h3>
       
       <form
         action="post"
         onSubmit={handleSubmit}
-        className="flex flex-col w-1/2 mt-4"
+        className="flex flex-col mt-4 xl:w-[30vw] 2xl:w-1/2"
         >
         {/* Name */}
         <input
@@ -103,10 +103,10 @@ function Signup() {
           value={formData.name}
           onChange={handleChange}
           placeholder="Name"
-          className="border-b-2 border-b-[#808080] py-2.5 w-[26vw] my-3 focus:outline-none"
+          className="border-b-2 border-b-[#808080] py-2.5 w-[75vw] my-3 focus:outline-none sm:w-[45vw] md:w-[41vw] xl:w-[30vw] 2xl:w-[26vw]"
           />
         {errors.name && (
-          <p className="text-red-600 text-lg font-medium text-center">
+          <p className="text-red-600 text-xs font-medium text-center sm:text-sm md:text-lg">
             {errors.name}
           </p>
         )}
@@ -118,10 +118,10 @@ function Signup() {
           value={formData.emailOrPhone}
           onChange={handleChange}
           placeholder="Email or Phone Number"
-          className="border-b-2 border-b-[#808080] py-2.5 w-[26vw] my-3 focus:outline-none"
+          className="border-b-2 border-b-[#808080] py-2.5 w-[75vw] my-3 focus:outline-none sm:w-[45vw] md:w-[41vw] xl:w-[30vw] 2xl:w-[26vw]"
           />
         {errors.emailOrPhone && (
-          <p className="text-red-600 text-lg font-medium text-center">
+          <p className="text-red-600 text-xs font-medium text-center sm:text-sm md:text-lg">
             {errors.emailOrPhone}
           </p>
         )}
@@ -133,10 +133,10 @@ function Signup() {
           value={formData.password}
           onChange={handleChange}
           placeholder="Password"
-          className="border-b-2 border-b-[#808080] py-2.5 w-[26vw] my-3 focus:outline-none"
+          className="border-b-2 border-b-[#808080] py-2.5 w-[75vw] my-3 focus:outline-none sm:w-[45vw] md:w-[41vw] xl:w-[30vw] 2xl:w-[26vw]"
           />
         {errors.password && (
-          <p className="text-red-600 text-lg font-medium text-center">
+          <p className="text-red-600 text-xs font-medium text-center sm:text-sm md:text-lg">
             {errors.password}
           </p>
         )}
@@ -145,21 +145,21 @@ function Signup() {
         <input
           type="submit"
           value="Create Account"
-          className="bg-[#DB4444] text-[#FAFAFA] py-[15px] w-[26vw] my-[20px] cursor-pointer rounded-md focus:outline-none"
+          className="bg-[#DB4444] text-[#FAFAFA] py-2.5 my-3 w-[75vw] cursor-pointer rounded-md focus:outline-none sm:my-[20px] sm:w-[45vw] sm:py-[15px] md:w-[41vw] xl:w-[30vw] 2xl:w-[26vw]"
           />
       </form>
 
         {/* Global Error */}
       {errors.global && (
-        <p className="text-red-600 text-lg font-medium text-center mb-5">
+        <p className="text-red-600 text-xs font-medium text-center sm:mb-5 sm:text-sm md:text-lg">
           {errors.global}
         </p>
       )}
 
       {/* Auth signUp  */}
-      <div className="flex justify-center relative left-2.5 w-[26vw] py-[15px] border-2 border-[#999999] rounded-md mb-2.5 cursor-pointer" onClick={handleGoogleLogin}>
+      <div className="flex justify-center py-2.5 w-[75vw] border-2 border-[#999999] rounded-md cursor-pointer sm:mb-2.5 sm:w-[45vw] sm:py-[15px] md:w-[41vw] xl:w-[30vw] 2xl:w-[26vw] 2xl:relative 2xl:left-2.5" onClick={handleGoogleLogin}>
         <img src={Google} alt="" />
-        <p className="ml-[15px] text-xl font-medium" >Sign up with Google</p>
+        <p className="ml-3 font-medium text-lg sm:text-xl sm:ml-[15px]" >Sign up with Google</p>
       </div>
 
       {/* Swich to Login if Alredy have account */}

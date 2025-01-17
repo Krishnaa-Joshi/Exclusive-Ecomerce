@@ -12,8 +12,8 @@ const app = express(); //express App
 const jwt_Secret = process.env.JWT_SECRET;
 
 // MiddleWare 
-app.use(cors());  
-app.use(express.json());
+app.use(cors());
+app.use(express.json()); 
 app.use(passport.initialize());
   
 // Google OAuth Logic  
@@ -283,9 +283,9 @@ app.post("/signUp", async (req, res) => {
 
     if (isEmail) {
       newUser.email = emailOrPhone;
-    } else {
+    } else {  
       newUser.phone = emailOrPhone;
-    }
+    }  
 
     const query = {};
     if (newUser.email) query.email = newUser.email;
@@ -304,7 +304,7 @@ app.post("/signUp", async (req, res) => {
     // Create token
     const token = jwt.sign(
       { id: newUser._id, email: newUser.email },
-      jwt_Secret,
+      jwt_Secret, 
       { expiresIn: "1h" }
     );
 
@@ -313,9 +313,9 @@ app.post("/signUp", async (req, res) => {
     console.error("Registration error:", err);
     res.status(500).json({ error: "Error registering user" });
   }
-});
+}); 
 
-// Login Endpint
+// Login Endpoint
 app.post("/login", async (req, res) => {
   const { emailOrPhone, password } = req.body;
 
@@ -347,13 +347,13 @@ app.post("/login", async (req, res) => {
       jwt_Secret,
       { expiresIn: "1h" }
     );
-
+ 
     res.status(200).json({ message: "Login Successful", token });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: "Error logging in user" });
   }
-});
+}); 
 
 // MongoDb uri
 const uri =
