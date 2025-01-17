@@ -5,43 +5,46 @@ function AboutCard({
   // Props
   figure,
   detail,
-  color1 = "#C1C0C1",
-  color2 = "black",
   box = true,
+  color = "",
   bgColor = "",
   pathSrc,
-  fontSize = "2.5rem",
-  fontWeight = "500",
-  mBottom = true,
-  width = "18%",
+  width = "",
+  fontSize = "",
+  fontWeight = "",
+  height = "",
 }) {
-  
   return (
     <div
-      style={{ backgroundColor: bgColor, width: width }}
-      className={` ${
+      className={`flex flex-col justify-center items-center rounded-sm m-1.5 sm:m-2.5 ${
+        width === "" ? "w-[46vw] md:w-[22vw] xl:w-[17vw]" : width
+      } ${height === "" ? "h-[30vh] " : height} ${
         box ? "border-2 border-[#B3B3B3]" : ""
-      }  flex flex-col justify-center items-center  h-[30vh] rounded-sm m-2.5`}
+      } ${bgColor === "" ? "" : bgColor}`}
     >
-      <div
-        style={{ backgroundColor: color1 }}
-        className="w-[85px] h-[85px] rounded-full flex justify-center items-center"
-      >
-        <div
-          style={{ backgroundColor: color2 }}
-          className="h-[63px] w-[63px] flex justify-center rounded-full"
-        >
-          <img src={pathSrc} alt="" className={` max-w-11`} />
-        </div>
+      <div className="rounded-full flex justify-evenly items-center w-[18vw] sm:w-[10vw] md:w-auto">
+        <img src={pathSrc} alt="" />
       </div>
-
-      <h1
-        style={{ color: color2, fontSize: fontSize }}
-        className={`font-bold text-4xl ${mBottom ? "mb-2.5" : ""} mt-2.5"`}
+      <div
+        className={`flex flex-col justify-center items-center my-1 sm:justify-evenly sm:h-[10vh] ${
+          color === "" ? "" : color
+        }`}
       >
-        {figure}
-      </h1>
-      <p style={{ color: color2, fontWeight: fontWeight }}>{detail}</p>
+        <p
+          className={`text-center ${
+            fontWeight === "" ? "font-bold" : fontWeight
+          } ${fontSize === "" ? "text-3xl md:text-4xl" : fontSize}`}
+        >
+          {figure}
+        </p>
+        <p
+          className={`text-sm mx-2 text-center sm:text-base md:mx-0 ${
+            fontWeight === "" ? "font-medium" : ""
+          } ${fontSize === "" ? "" : "text-sm"}`}
+        >
+          {detail}
+        </p>
+      </div>
     </div>
   );
 }
@@ -50,15 +53,14 @@ function AboutCard({
 AboutCard.propTypes = {
   figure: PropTypes.string,
   detail: PropTypes.string,
-  color1: PropTypes.string,
-  color2: PropTypes.string,
   box: PropTypes.bool,
+  color: PropTypes.string,
   bgColor: PropTypes.string,
   pathSrc: PropTypes.string,
+  width: PropTypes.string,
   fontSize: PropTypes.string,
   fontWeight: PropTypes.string,
-  mBottom: PropTypes.bool,
-  width: PropTypes.string,
+  height: PropTypes.string,
 };
 
 export default AboutCard;

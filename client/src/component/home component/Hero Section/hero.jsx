@@ -1,3 +1,4 @@
+// Hooks
 import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
@@ -8,7 +9,7 @@ function HeroSection() {
       <p className="text-center sm:text-left">
         End of Season Sale on All Furnitures And Free Express Delivery - OFF 50%!
         <span
-          className="underline font-bold cursor-pointer inline-block sm:inline ml-1 "
+          className="underline font-bold cursor-pointer inline-block ml-1 sm:inline"
           onClick={() => navigate("/")}
         >
           ShopNow

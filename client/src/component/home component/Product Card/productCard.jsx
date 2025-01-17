@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // SVGs
-import seen from "../../../assets/Home assets/Product Card/eye.svg";
 import EmptyStar from "../../../assets/Home assets/Product Card/emptyStar.svg";
 import Star from "../../../assets/Home assets/Product Card/star.svg";
 import wishlist from "../../../assets/Navbar assets/wishlist.svg";
@@ -26,7 +25,7 @@ const ProductCard = ({ product, url }) => {
     handleIncrement,
     handleDecrement,
     isAuth,
-    currentPage
+    currentPage,
   } = useContext(Context);
 
   const Navigate = useNavigate();
@@ -37,11 +36,13 @@ const ProductCard = ({ product, url }) => {
     (product.price * product.discountPercentage) / 100
   ).toFixed(2);
 
+  const discount = Math.round(product.discountPercentage);
+
   //  Add product to Wishlist
   const handleAddToWishlist = (product) => {
-    if(!isAuth){
+    if (!isAuth) {
       Navigate("/signUp");
-      return ;
+      return;
     }
     setWhishlistProducts((prev) => {
       const isInWishlist = prev.some((item) => item.id === product.id); // Check if product already in wishlist
@@ -62,9 +63,9 @@ const ProductCard = ({ product, url }) => {
 
   // Add product to Cart
   const handleAddToCart = (product) => {
-    if(!isAuth){
+    if (!isAuth) {
       Navigate("/signUp");
-      return ;
+      return;
     }
     setCartProducts((prev) => {
       const isInCart = prev.some((item) => item.id === product.id);
@@ -83,74 +84,77 @@ const ProductCard = ({ product, url }) => {
   };
 
   return (
-    <div className="w-60 h-[335px] my-3 rounded-t-lg  overflow-hidden mx-5 bg-white flex flex-col relative transform transition-transform duration-300 hover:scale-105">
+    <div className="w-[40vw] h-[45vh] my-2 rounded-t-md overflow-hidden bg-white flex flex-col relative sm:w-[30vw] sm:h-[48vh] md:transform md:transition-transform md:duration-300 md:hover:scale-105 md:w-[23vw] lg:h-[50vh] xl:w-[18vw] 2xl:h-[52vh] 2xl:my-3 2xl:rounded-t-lg 2xl:mx-5">
       {/* Discount Badge */}
-      <div className="absolute bg-red-500 text-white text-xs font-bold px-2 py-1 rounded m-2.5 z-10">
-        -{product.discountPercentage}%
-      </div>
+      {discount === 0 ? null : (
+        <div className="z-10 bg-red-500 text-white absolute flex flex-col m-2 text-[10px] h-[30px] w-[30px] rounded-full items-center justify-center font-bold px-2 py-1 sm:text-xs sm:w-[35px] sm:h-[35px] xl:justify-start xl:items-start xl:h-auto xl:w-auto xl:flex-row xl:text-xs xl:rounded xl:m-2.5">
+          <p className="xl:mr-1">{discount}% </p>
+          <p>off</p>
+        </div>
+      )}
 
-      {/* Product Image */}
-      <div className="relative bg-[#F5F5F5] h-48 flex justify-center items-center">
-        <img
-          src={product.images[0]}
-          alt={product.title}
-          className="max-h-full max-w-full object-contain"
-        />
-
-        {/* Action Icons */}
-        <div className="absolute top-2 right-2 space-y-2">
-          {/* wishlist and delete button */}
-          {currentPage != "" ? (
-            <button
-              className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md"
-              onClick={() => handleAddToWishlist(product)}
-            >
-              <img
-                src={
-                  url === "wishlist"
-                    ? wishlistProducts.some((item) => item.id === product.id)
-                      ? AddedTowishlist
-                      : wishlist
-                    : trash
-                }
-                alt=""
-              />
-            </button>
-          ) : (
-            <button
-              className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md"
-              onClick={() => handleAddToWishlist(product)}
-            >
-              <img
-                src={
-                  (wishlistProducts.some((item) => item.id === product.id) && isAuth)
+      {/* Action Icons */}
+      <div className="z-10 absolute top-1.5 right-2 space-y-2 2xl:top-2">
+        {/* wishlist and delete button */}
+        {currentPage != "" ? (
+          <button
+            className="w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center shadow-md sm:w-[33px] sm:h-[33px] 2xl:w-8 2xl:h-8"
+            onClick={() => handleAddToWishlist(product)}
+          >
+            <img
+              src={
+                url === "wishlist"
+                  ? wishlistProducts.some((item) => item.id === product.id)
                     ? AddedTowishlist
                     : wishlist
-                }
-                alt=""
-              />
-            </button>
-          )}
-          {/* Seen button */}
-          <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
-            <img
-              src={seen}
+                  : trash
+              }
               alt=""
-              onClick={handleSeen }
+              className="w-[20px] sm:w-[24px] 2xl:w-auto"
             />
           </button>
+        ) : (
+          <button
+            className="w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center shadow-md sm:w-[33px] sm:h-[33px] 2xl:w-8 2xl:h-8"
+            onClick={() => handleAddToWishlist(product)}
+          >
+            <img
+              src={
+                wishlistProducts.some((item) => item.id === product.id) &&
+                isAuth
+                  ? AddedTowishlist
+                  : wishlist
+              }
+              alt=""
+              className="w-[20px] sm:w-[24px] 2xl:w-auto"
+            />
+          </button>
+        )}
+      </div>
+      {/* Product Image */}
+      <div
+        className="relative bg-[#F5F5F5] w-[40vw] h-[25vh] flex justify-center items-center cursor-pointer sm:w-[30vw] md:w-[23vw] xl:w-[18vw] 2xl:w-auto 2xl:h-48"
+        onClick={handleSeen}
+      >
+        <div className="w-[30vw] h-[140px] flex justify-center 2xl:w-[190px] 2xl:h-[190px]">
+          <img
+            src={product.images[0]}
+            alt={product.title}
+            className="w-[30vw] object-contain 2xl:max-h-full 2xl:max-w-full 2xl:w-[190px]"
+          />
         </div>
       </div>
 
       {/* Add to Cart Button */}
       {cartProducts.some((item) => item.id === product.id) ? (
-        <div className="flex justify-around w-full items-center rounded-b-lg bg-black py-2 text-white">
+        <div className="flex justify-around w-full items-center rounded-b-md bg-black py-2 text-white 2xl:rounded-b-lg">
           <img
             src={decrement}
             alt="decrement"
             onClick={() => handleDecrement(product.id)}
             className="cursor-pointer"
-          /> {/* decrement */}
+          />{" "}
+          {/* decrement */}
           <p className="font-medium">
             {
               cartProducts.find((item) => item.id === product.id)?.quantity || 1 // Display quantity
@@ -161,37 +165,43 @@ const ProductCard = ({ product, url }) => {
             alt="increment"
             onClick={() => handleIncrement(product.id)}
             className="cursor-pointer"
-          /> {/* increment */}
+          />{" "}
+          {/* increment */}
         </div>
       ) : (
         <button
-          className="flex justify-center items-center w-full rounded-b-lg bg-black text-white py-2 text-sm font-bold"
+          className="flex justify-center items-center w-full rounded-b-md font-bold bg-black text-white py-2 text-xs 2xl:text-sm 2xl:rounded-b-lg"
           onClick={() => handleAddToCart(product)}
         >
           <div>
-            <img src={cart} className="mr-2" alt="" />
+            <img
+              src={cart}
+              className="w-[18px] sm:w-[20px] mr-2 2xl:w-auto"
+              alt=""
+            />
           </div>
           Add To Cart
         </button>
       )}
 
       {/* Product Details */}
-      <div className="p-2  flex-1 flex flex-col justify-start">
-        
+      <div className="p-2 flex-1 flex flex-col justify-start">
         {/* Title */}
-        <h3 className="text-sm font-bold mb-1 line-clamp-2">{product.title}</h3>
+        <h3 className="text-xs font-bold line-clamp-2 sm:text-sm lg:text-base 2xl:text-lg 2xl:mb-1">
+          {product.title}
+        </h3>
 
         {/* Price */}
-        <div className="flex items-center space-x-2">
-          <span className="text-red-500 font-bold text-lg mb-1">
+        <div className="flex items-center space-x-2 2xl:mb-1">
+          <span className="text-red-500 font-bold text-sm lg:text-lg">
             ${discountedPrice}
           </span>
           <span className="line-through text-gray-500">${product.price}</span>
         </div>
 
         {/* Rating */}
-        <div className="flex items-center">
-          <div className=" flex">
+        <div className="flex items-center w-[100px] justify-between lg:w-28 2xl:justify-start 2xl:w-auto">
+          <div className="flex w-[14px] lg:w-4 2xl:w-auto">
             {(() => {
               const stars = [];
               for (let i = 0; i < 5; i++) {
@@ -205,7 +215,7 @@ const ProductCard = ({ product, url }) => {
               return stars;
             })()}
           </div>
-          <span className="text-gray-500 text-sm ml-2">
+          <span className="text-gray-500 text-xs ml-2 sm:text-sm lg:text-base 2xl:text-lg">
             ({product.rating.toFixed(1)})
           </span>
         </div>
@@ -218,6 +228,6 @@ const ProductCard = ({ product, url }) => {
 ProductCard.propTypes = {
   product: PropTypes.object,
   url: PropTypes.string,
-}
+};
 
 export default ProductCard;

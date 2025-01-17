@@ -27,7 +27,10 @@ function CartPage() {
       {
         cartProducts.length > 0 ? 
         <DisplayCart/> :
-        <EmptyState img={emptyCart} heading={"Your cart is Empty"} subLine={"Looks like you haven't made your choice yet..."} />
+        <div className="flex justify-center items-center h-[75vh] md:h-[80vh] xl:w-auto xl:block">
+          <EmptyState img={emptyCart} heading={"Your cart is Empty"} subLine={"Looks like you haven't made your choice yet..."} />
+        </div>
+          
       }
       
       <Footer />

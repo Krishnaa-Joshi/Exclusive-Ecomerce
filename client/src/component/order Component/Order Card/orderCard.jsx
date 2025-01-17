@@ -5,7 +5,13 @@ import PropTypes from "prop-types";
 import OrderDetails from "../Order Details/orderDetails";
 import OrderInfo from "../order info/OrderInfo";
 
-function OrderCard({ order, index, handleCancel,handleViewOrder,handleCloseOrder }) {
+function OrderCard({
+  order,
+  index,
+  handleCancel,
+  handleViewOrder,
+  handleCloseOrder,
+}) {
   // Utility function to format the date
   function formatDate(dateString) {
     const options = { day: "2-digit", month: "short", year: "numeric" };
@@ -28,58 +34,67 @@ function OrderCard({ order, index, handleCancel,handleViewOrder,handleCloseOrder
 
   return order.viewOrder ? (
     // Order Details Component
-    <OrderDetails order={order} handleCloseOrder={handleCloseOrder} index={index}/>
+    <OrderDetails
+      order={order}
+      handleCloseOrder={handleCloseOrder}
+      index={index}
+    />
   ) : (
-    <div className="rounded-lg bg-[#F5F5F5] w-[45vw] my-5">
+    <div className="rounded-lg bg-[#F5F5F5] w-[95vw]  my-3 md:my-5 md:w-[65vw] lg:w-[45vw]">
       {/* Order Status */}
-      <div className="p-5">
+      <div className="p-3 sm:p-5">
         {/* Status */}
-        <h1 className="font-semibold text-[#808080]">Order Status:</h1>
-        <p className="font-bold text-lg">{order.status}</p>
+        <h1 className="font-semibold text-[#808080] text-sm sm:text-base">
+          Order Status:
+        </h1>
+        <p className="font-bold text-base sm:text-lg">{order.status}</p>
         {/* Unsccessful order */}
         {order.status === "ORDER UNSUCCESSFUL" ? (
-          <p className="text-red-600 font-semibold text-sm">
+          <p className="text-red-600 font-semibold text-xs sm:text-sm">
             Sorry, Order Cancel
           </p>
         ) : (
           // Delivery date
-          <p className="text-green-600 font-semibold text-sm">{`Estimated delivery: ${formatDate(
+          <p className="text-green-600 font-semibold text-xs sm:text-sm">{`Estimated delivery: ${formatDate(
             order.deliveryDate
           )} `}</p>
         )}
       </div>
 
       {/* Products Images */}
-      <div className="p-5">
+      <div className="p-3 sm:p-5">
         <div className="flex">
           {order.products.map((product) => (
             <div key={product.id} className="mb-2 bg-white rounded-sm mx-1">
-              <img src={product.images[0]} alt="" className="w-20 h-20 object-contain" />
+              <img
+                src={product.images[0]}
+                alt=""
+                className="w-14 h-14 object-contain sm:w-20 sm:h-20"
+              />
             </div>
           ))}
         </div>
       </div>
 
-      <div className="flex justify-between p-5 border-t-2 mx-4">
+      <div className="justify-between border-t-2 px-1.5 py-3 mx-2 sm:flex sm:p-5 sm:mx-4">
         {/* Order Details */}
-        <div>
-          <OrderInfo label="Order No.:" value={`#${order.orderNo}`}/>
-          <OrderInfo label="Ordered Date:" value={formatDate(order.date)}/>
-          <OrderInfo label="Total Price:" value={`$${order.totalPrice}`}/>
+        <div className="mb-3 sm:mb-0">
+          <OrderInfo label="Order No.:" value={`#${order.orderNo}`} />
+          <OrderInfo label="Ordered Date:" value={formatDate(order.date)} />
+          <OrderInfo label="Total Price:" value={`$${order.totalPrice}`} />
         </div>
-        
 
         {/* Action Buttons */}
-        <div className="flex flex-col ml-4">
+        <div className="ml-1 flex justify-between sm:flex-col sm:ml-4">
           <button
-            className="p-2 border-2 border-[#808080] rounded-md w-44 bg-white font-semibold text-md mb-2"
+            className="bg-white font-semibold border-2 border-[#808080] rounded-md w-32 p-1.5 text-sm sm:p-2 sm:w-44 sm:mb-2"
             onClick={handleView}
           >
             VIEW ORDER
           </button>
           {order.status !== "ORDER UNSUCCESSFUL" ? (
             <button
-              className="p-2 border-2 border-[#808080] rounded-md w-44 bg-white font-semibold text-md"
+              className="border-2 border-[#808080] rounded-md bg-white font-semibold w-32 p-1.5 text-sm sm:w-44 sm:p-2"
               onClick={handleCancelButton}
             >
               CANCEL ORDER

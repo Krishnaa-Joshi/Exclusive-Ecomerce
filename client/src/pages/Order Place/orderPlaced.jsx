@@ -6,15 +6,16 @@ import Footer from "@/component/common component/footer/footer";
 // Hooks
 import { useContext } from "react";
 import { Context } from "@/context";
+import { useNavigate } from "react-router-dom";
 
 // SVGs
 import OrderSucessfull from "../../assets/Ordered placed/order_sucessful.png";
 import SummaryProductCard from "@/component/Summery ProductCard/SummeryProducrCard";
 import Button from "@/component/Button/Button";
-import { useNavigate } from "react-router-dom";
 
 function OrderPlaced() {
   const { orderNoGenrator, totalPrice, orderedDetails } = useContext(Context);
+
   const navigate = useNavigate();
 
   // orderNo 
@@ -22,7 +23,6 @@ function OrderPlaced() {
   
   // Products
   const Products = orderedDetails[orderedDetails.length - 1]?.products;
-  console.log(Products);
   
   // Total Price
   const total = totalPrice(Products);
@@ -37,28 +37,28 @@ function OrderPlaced() {
       <HeroSection />
       <NavBar />
 
-      <div className="bg-[#F5F5F5] m-10 rounded-lg h-[140vh]">
+      <div className="bg-[#F5F5F5] rounded-lg h-[140vh] m-5 sm:m-10 md:h-[150vh]">
         {/* Order SuccessFul Message */}
-        <div className="flex flex-col items-center h-[65vh]">
-          <img src={OrderSucessfull} alt="" className="w-24 mt-24" />
-          <p className="text-5xl font-semibold my-5 ">
+        <div className="flex flex-col items-center h-[60vh] sm:h-[65vh]">
+          <img src={OrderSucessfull} alt="" className="w-16 mt-16 sm:w-24 sm:mt-24" />
+          <p className="text-xl font-semibold my-5  sm:text-3xl md:text-5xl">
             Thank You For Ordering!
           </p>
-          <p className="text-xl text-[#999999] my-1">
+          <p className="text-[#999999] text-lg text-center sm:my-1 sm:text-start sm:text-xl">
             An email confirmation has been Send to you
           </p>
-          <p className="text-xl text-[#999999] ">{`Your Order No is #${orderNo}`}</p>
+          <p className="text-[#999999] text-lg text-center sm:text-start sm:text-xl">{`Your Order No is #${orderNo}`}</p>
 
           {/* Order More Button */}
-          <Button padding="p-3" width="w-40" rounded="rounded-sm" handleFunc={handleOrderMore} title="Order More" otherStyle="mt-8"/>
+          <Button padding="p-3" width="w-40" rounded="rounded-sm" handleFunc={handleOrderMore} title="Order More" otherStyle="mt-6 sm:mt-8"/>
         </div>
 
         {/* Order Summery */}
-        <div className="flex flex-col items-center justify-center mt-10">
-          <div className="bg-white w-2/5 rounded-lg">
-            <p className="text-4xl font-medium px-5 my-2.5 ">Order Summery</p>
+        <div className="flex flex-col items-center justify-center sm:mt-10 md:mt-20">
+          <div className="bg-white rounded-lg w-[80vw] md:w-[60vw] lg:w-[50vw] xl:w-2/5">
+            <p className="font-medium text-2xl px-5 my-2.5  sm:text-4xl">Order Summery</p>
             <div
-              className={`flex flex-col items-center p-2 overflow-y-auto ${
+              className={`flex flex-col items-center overflow-y-auto p-1 sm:p-2 ${
                 Products.length > 2 ? "max-h-[275px]" : ""
               }`}
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}

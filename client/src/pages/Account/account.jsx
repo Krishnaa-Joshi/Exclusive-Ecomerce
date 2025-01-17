@@ -88,46 +88,64 @@ function UserAccoutPage() {
       <Path />
 
       {/* Welcome Message */}
-      <div className="flex relative left-24 mt-6">
-        <p className="font-semibold">Welcome!</p>
-        <p className="text-[#DB4444] ml-2 font-semibold">{profileData.name}</p>
+      <div className="flex flex-col justify-center items-center mt-10 sm:flex-row sm:items-start md:justify-start md:relative md:left-24 md:mt-6">
+        <p className="font-semibold text-sm sm:text-base">Welcome!&nbsp;</p>
+        <p className="text-[#DB4444] font-semibold text-lg sm:text-base sm:ml-2">
+          {profileData.name}
+        </p>
       </div>
 
       {/* Error or Success Message */}
       {error ? <Message /> : null}
 
       <div
-        className={`flex w-[84vw] ${
-          editing ? "h-[115vh]" : "h-[90vh]"
-        } justify-between`}
+        className={`justify-between mb-20 md:flex md:w-[750px] lg:w-[1000px] xl:w-[1080px] 2xl:w-[1200px] ${
+          editing ? "md:h-[115vh]" : " md:h-[90vh]"
+        }`}
       >
-        <div className="flex flex-col w-[22vw] h-[50vh] items-center mt-16">
+        <div className="mt-16 md:flex md:flex-col md:w-[22vw] md:h-[50vh] md:items-center">
           {/* User Details */}
-          <div>
-            <h1 className="font-semibold mb-3">Manage My Account</h1>
-            <p
-              className={`relative left-8 mt-1 cursor-pointer ${
-                section == "profile" ? "text-[#DB4444]" : "text-[#808080]"
-              }`}
-              onClick={() => handleSection("profile")}
-            >
-              My Profile
-            </p>
-            <p
-              className={`relative left-8 mt-1 mb-3 cursor-pointer ${
-                section == "Address" ? "text-[#DB4444]" : "text-[#808080]"
-              }`}
-              onClick={() => handleSection("Address")}
-            >
-              My Address
-            </p>
+          <div
+            className={`${
+              ["profile", "Address"].includes(section)
+                ? "block"
+                : "hidden md:block"
+            }`}
+          >
+            <h1 className="font-semibold mx-3 mb-3 md:mx-0 ">
+              Manage My Account
+            </h1>
+            <div className="flex justify-center w-full mt-5 md:w-auto md:block">
+              <p
+                className={`mr-5 mt-1 cursor-pointer md:relative md:left-8 ${
+                  section == "profile" ? "text-[#DB4444]" : "text-[#808080]"
+                }`}
+                onClick={() => handleSection("profile")}
+              >
+                My Profile
+              </p>
+              <p
+                className={`mt-1 mb-3 cursor-pointer md:relative md:left-8 ${
+                  section == "Address" ? "text-[#DB4444]" : "text-[#808080]"
+                }`}
+                onClick={() => handleSection("Address")}
+              >
+                My Address
+              </p>
+            </div>
           </div>
 
           {/* My Orders */}
-          <div className="relative right-9 mt-2">
-            <h1 className="font-semibold mb-3">My Orders</h1>
+          <div
+            className={`mt-2 ${
+              section === "order" ? "block" : "hidden"
+            } md:block md:relative md:right-9`}
+          >
+            <h1 className="font-semibold mx-3 md:mx-0 mb-3 text-xl md:text-base">
+              My Orders
+            </h1>
             <p
-              className={`relative left-8 mt-1 mb-3 cursor-pointer ${
+              className={`hidden left-10 md:relative md:mt-1 md:mb-3 md:cursor-pointer md:block lg:left-8 ${
                 section == "order" ? "text-[#DB4444]" : "text-[#808080]"
               }`}
               onClick={() => handleSection("order")}
@@ -137,7 +155,7 @@ function UserAccoutPage() {
           </div>
 
           {/* My Wishlist */}
-          <div className="relative right-8 mt-2">
+          <div className="hidden md:block md:relative md:right-8 md:mt-2">
             <h1 className="font-semibold mb-3 ">My WishList</h1>
             <p
               className={`relative left-8 mt-1 mb-3 cursor-pointer ${
@@ -162,14 +180,16 @@ function UserAccoutPage() {
         {/* Order Section */}
         {section === "order" ? (
           orderedDetails?.length === 0 ? (
-            <EmptyState
-              img={EmptyOrder}
-              heading={"You haven't ordered anything yet."}
-              subLine={"Long time you haven't bought anything"}
-            />
+            <div className="flex justify-center items-center md:block">
+              <EmptyState
+                img={EmptyOrder}
+                heading={"You haven't ordered anything yet."}
+                subLine={"Long time you haven't bought anything"}
+              />
+            </div>
           ) : (
             <div
-              className="flex flex-col items-center w-[61vw] overflow-y-auto max-h-screen relative bottom-14"
+              className="flex flex-col items-center overflow-y-auto max-h-screen mt-4 md:mt-8 md:w-[68vw] md:overflow-x-hidden lg:mt-0 lg:relative lg:top-8 xl:bottom-14"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {Children.toArray(
@@ -194,7 +214,7 @@ function UserAccoutPage() {
                       .map((order) => (
                         <OrderCard
                           order={order}
-                          index={order.originalIndex} 
+                          index={order.originalIndex}
                           handleCancel={handleCancel}
                           handleViewOrder={handleViewOrder}
                           handleCloseOrder={handleCloseOrder}
@@ -207,11 +227,13 @@ function UserAccoutPage() {
 
         {/* WishList Section */}
         {section === "wishList" && quantity === 0 ? (
-          <EmptyState
-            img={EmptywishlistImg}
-            heading={"Your wishlist is empty!"}
-            subLine={"Explore more and shortlist some items"}
-          />
+          <div className="md:flex md:items-center md:justify-start md:w-[70vw] lg:w-auto xl:block">
+            <EmptyState
+              img={EmptywishlistImg}
+              heading={"Your wishlist is empty!"}
+              subLine={"Explore more and shortlist some items"}
+            />
+          </div>
         ) : null}
 
         {/* Address Section */}
