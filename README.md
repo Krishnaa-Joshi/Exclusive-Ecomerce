@@ -24,8 +24,6 @@ Exclusive is a fully responsive E-commerce Website built with the MERN stack (Mo
 
 -Checkout Page
 
--Payment Gateway Integration
-
 -Search & Filter Options
 
 -Modern UI/UX with Tailwind CSS
